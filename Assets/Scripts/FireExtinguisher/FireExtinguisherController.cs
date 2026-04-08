@@ -1,5 +1,6 @@
 using Oculus.Interaction;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace EmergencyXR.FireExtinguisher
 {
@@ -41,9 +42,18 @@ namespace EmergencyXR.FireExtinguisher
         [SerializeField]
         private float _recoilForce = 2.5f;
 
-        [Header("Debug")]
+        [Header("Test")]
         [SerializeField]
-        private bool _debugLogs = false;
+        private bool _logFireState = true;
+
+        [SerializeField]
+        private UnityEvent _whenFireStarted;
+
+        [SerializeField]
+        private UnityEvent _whenFireStopped;
+
+        [SerializeField]
+        private bool _runtimeIsFiring;
 
         private bool _isFiring;
 
@@ -54,6 +64,7 @@ namespace EmergencyXR.FireExtinguisher
         {
             bool canFire = EvaluateCanFire();
             SetFiring(canFire);
+            _runtimeIsFiring = _isFiring;
 
             if (_isFiring)
             {
@@ -85,11 +96,12 @@ namespace EmergencyXR.FireExtinguisher
             }
 
             float trigger = GetIndexTrigger(controller);
-            if (_debugLogs)
+            if (trigger < _triggerThreshold)
             {
-                Debug.Log($"[FireExtinguisherController:{name}] Handle by {controller}, trigger={trigger:0.00}", this);
+                return false;
             }
-            return trigger >= _triggerThreshold;
+
+            return true;
         }
 
         private bool TryGetCurrentGrabInteractor(out GrabInteractor interactor)
@@ -142,6 +154,19 @@ namespace EmergencyXR.FireExtinguisher
             }
 
             _isFiring = shouldFire;
+            if (_logFireState)
+            {
+                Debug.Log(_isFiring ? "발사 중" : "발사 중단", this);
+            }
+
+            if (_isFiring)
+            {
+                _whenFireStarted?.Invoke();
+            }
+            else
+            {
+                _whenFireStopped?.Invoke();
+            }
 
             if (_sprayParticles != null)
             {
@@ -178,5 +203,6 @@ namespace EmergencyXR.FireExtinguisher
             Vector3 direction = -_sprayNozzle.forward;
             _extinguisherBody.AddForceAtPosition(direction * _recoilForce, _sprayNozzle.position, ForceMode.Force);
         }
+
     }
 }

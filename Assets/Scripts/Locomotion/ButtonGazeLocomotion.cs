@@ -7,49 +7,83 @@ namespace EmergencyXR.Locomotion
     /// </summary>
     public class ButtonGazeLocomotion : MonoBehaviour
     {
-        [Header("References")]
-        [SerializeField]
-        private CharacterController _characterController;
+        public enum MoveDirectionMode
+        {
+            HmdForward,
+            ControllerForwardBlend
+        }
 
+        [Header("References")]
         [SerializeField]
         private Transform _hmdTransform;
 
         [SerializeField]
+        private Transform _leftControllerTransform;
+
+        [SerializeField]
+        private Transform _rightControllerTransform;
+
+        [SerializeField]
         private ArmSwingSpeedBoost _armSwingBoost;
 
-        [Tooltip("기존 조이스틱 이동 Provider가 있다면 여기 넣어 자동 비활성화하세요.")]
         [SerializeField]
-        private Behaviour[] _disableWhileActive;
+        private Transform _rigRoot;
 
         [Header("Move")]
         [SerializeField]
         private float _baseMoveSpeed = 1.8f;
 
         [SerializeField]
-        private bool _useUnscaledTime = false;
+        private MoveDirectionMode _moveDirectionMode = MoveDirectionMode.HmdForward;
 
         [SerializeField]
-        private bool _includeGravity = true;
+        private bool _flattenDirectionOnHorizontalPlane = true;
+
+        [SerializeField]
+        private bool _useUnscaledTime = false;
 
         [SerializeField]
         private float _gravity = -9.81f;
 
+        [SerializeField]
+        private bool _useGravity = false;
+
+        [Header("Collision")]
+        [SerializeField]
+        private bool _usePhysicsCollision = true;
+
+        [SerializeField]
+        private LayerMask _collisionLayers = ~0;
+
+        [SerializeField]
+        private float _collisionCapsuleHeight = 1.7f;
+
+        [SerializeField]
+        private float _collisionCapsuleRadius = 0.2f;
+
+        [SerializeField]
+        private float _collisionSkinWidth = 0.02f;
+
         private float _verticalVelocity;
-        private bool[] _previousProviderState;
 
         private void Reset()
         {
-            if (_characterController == null)
+            if (_rigRoot == null)
             {
-                _characterController = GetComponent<CharacterController>();
+                _rigRoot = transform;
             }
         }
 
         private void Update()
         {
-            if (_characterController == null || _hmdTransform == null)
+            if (_hmdTransform == null)
             {
                 return;
+            }
+
+            if (_rigRoot == null)
+            {
+                _rigRoot = transform;
             }
 
             float dt = _useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
@@ -63,32 +97,15 @@ namespace EmergencyXR.Locomotion
 
             if (movePressed)
             {
-                Vector3 forwardFlat = _hmdTransform.forward;
-                forwardFlat.y = 0f;
-                if (forwardFlat.sqrMagnitude > 0.0001f)
-                {
-                    forwardFlat.Normalize();
-                }
-                else
-                {
-                    forwardFlat = Vector3.forward;
-                }
-
+                Vector3 moveDirection = ComputeMoveDirection();
                 float speedMultiplier = _armSwingBoost != null ? _armSwingBoost.CurrentSpeedMultiplier : 1f;
                 float currentSpeed = _baseMoveSpeed * speedMultiplier;
-                planarVelocity = forwardFlat * currentSpeed;
+                planarVelocity = moveDirection * currentSpeed;
             }
 
-            if (_includeGravity)
+            if (_useGravity)
             {
-                if (_characterController.isGrounded && _verticalVelocity < 0f)
-                {
-                    _verticalVelocity = -1f;
-                }
-                else
-                {
-                    _verticalVelocity += _gravity * dt;
-                }
+                _verticalVelocity += _gravity * dt;
             }
             else
             {
@@ -96,45 +113,13 @@ namespace EmergencyXR.Locomotion
             }
 
             Vector3 velocity = planarVelocity + Vector3.up * _verticalVelocity;
-            _characterController.Move(velocity * dt);
-        }
-
-        private void OnEnable()
-        {
-            if (_disableWhileActive == null || _disableWhileActive.Length == 0)
+            Vector3 displacement = velocity * dt;
+            if (_usePhysicsCollision)
             {
-                return;
+                displacement = ResolveCollisionDisplacement(_rigRoot.position, displacement);
             }
 
-            _previousProviderState = new bool[_disableWhileActive.Length];
-            for (int i = 0; i < _disableWhileActive.Length; i++)
-            {
-                if (_disableWhileActive[i] == null)
-                {
-                    continue;
-                }
-
-                _previousProviderState[i] = _disableWhileActive[i].enabled;
-                _disableWhileActive[i].enabled = false;
-            }
-        }
-
-        private void OnDisable()
-        {
-            if (_disableWhileActive == null || _disableWhileActive.Length == 0 || _previousProviderState == null)
-            {
-                return;
-            }
-
-            for (int i = 0; i < _disableWhileActive.Length && i < _previousProviderState.Length; i++)
-            {
-                if (_disableWhileActive[i] == null)
-                {
-                    continue;
-                }
-
-                _disableWhileActive[i].enabled = _previousProviderState[i];
-            }
+            _rigRoot.position += displacement;
         }
 
         private static bool IsMoveButtonPressed()
@@ -142,6 +127,123 @@ namespace EmergencyXR.Locomotion
             bool leftY = OVRInput.Get(OVRInput.RawButton.Y);
             bool rightB = OVRInput.Get(OVRInput.RawButton.B);
             return leftY || rightB;
+        }
+
+        private Vector3 ComputeMoveDirection()
+        {
+            Vector3 direction;
+            switch (_moveDirectionMode)
+            {
+                case MoveDirectionMode.ControllerForwardBlend:
+                    direction = ComputeControllerBlendDirection();
+                    break;
+                default:
+                    direction = _hmdTransform.forward;
+                    break;
+            }
+
+            if (_flattenDirectionOnHorizontalPlane)
+            {
+                direction.y = 0f;
+            }
+
+            if (direction.sqrMagnitude < 0.0001f)
+            {
+                direction = Vector3.forward;
+            }
+
+            return direction;
+        }
+
+        private Vector3 ComputeControllerBlendDirection()
+        {
+            bool leftPressed = OVRInput.Get(OVRInput.RawButton.Y);
+            bool rightPressed = OVRInput.Get(OVRInput.RawButton.B);
+
+            Vector3 sum = Vector3.zero;
+            if (leftPressed && _leftControllerTransform != null)
+            {
+                Vector3 leftForward = _leftControllerTransform.forward;
+                leftForward.y = 0f;
+                if (leftForward.sqrMagnitude > 0.0001f)
+                {
+                    sum += leftForward.normalized;
+                }
+            }
+
+            if (rightPressed && _rightControllerTransform != null)
+            {
+                Vector3 rightForward = _rightControllerTransform.forward;
+                rightForward.y = 0f;
+                if (rightForward.sqrMagnitude > 0.0001f)
+                {
+                    sum += rightForward.normalized;
+                }
+            }
+
+            // 둘 다 눌렀을 때 같은 방향이면 2배, 반대면 0에 가까워집니다.
+            if (sum.sqrMagnitude > 0.0001f)
+            {
+                return sum;
+            }
+
+            return _hmdTransform.forward;
+        }
+
+        private Vector3 ResolveCollisionDisplacement(Vector3 origin, Vector3 desiredDisplacement)
+        {
+            float distance = desiredDisplacement.magnitude;
+            if (distance < 0.0001f)
+            {
+                return Vector3.zero;
+            }
+
+            Vector3 direction = desiredDisplacement / distance;
+            GetCapsulePoints(origin, out Vector3 p1, out Vector3 p2);
+
+            if (!Physics.CapsuleCast(
+                    p1, p2, _collisionCapsuleRadius, direction, out RaycastHit hit,
+                    distance + _collisionSkinWidth, _collisionLayers, QueryTriggerInteraction.Ignore))
+            {
+                return desiredDisplacement;
+            }
+
+            float moveDistance = Mathf.Max(0f, hit.distance - _collisionSkinWidth);
+            Vector3 moved = direction * moveDistance;
+
+            // 한 번 슬라이드하여 벽면을 따라 자연스럽게 이동
+            Vector3 remaining = desiredDisplacement - moved;
+            Vector3 slide = Vector3.ProjectOnPlane(remaining, hit.normal);
+            float slideDistance = slide.magnitude;
+            if (slideDistance < 0.0001f)
+            {
+                return moved;
+            }
+
+            Vector3 slideDir = slide / slideDistance;
+            Vector3 slideOrigin = origin + moved;
+            GetCapsulePoints(slideOrigin, out Vector3 sp1, out Vector3 sp2);
+
+            if (Physics.CapsuleCast(
+                sp1, sp2, _collisionCapsuleRadius, slideDir, out RaycastHit slideHit,
+                slideDistance + _collisionSkinWidth, _collisionLayers, QueryTriggerInteraction.Ignore))
+            {
+                float slideMoveDistance = Mathf.Max(0f, slideHit.distance - _collisionSkinWidth);
+                return moved + slideDir * slideMoveDistance;
+            }
+
+            return moved + slide;
+        }
+
+        private void GetCapsulePoints(Vector3 rootPosition, out Vector3 point1, out Vector3 point2)
+        {
+            float radius = Mathf.Max(0.01f, _collisionCapsuleRadius);
+            float height = Mathf.Max(radius * 2f + 0.01f, _collisionCapsuleHeight);
+            float halfSegment = (height * 0.5f) - radius;
+            Vector3 center = rootPosition + Vector3.up * (height * 0.5f);
+
+            point1 = center + Vector3.up * halfSegment;
+            point2 = center - Vector3.up * halfSegment;
         }
     }
 }

@@ -30,9 +30,6 @@ namespace EmergencyXR.FireExtinguisher
         private Rigidbody _pinRigidbody;
 
         [SerializeField]
-        private Rigidbody _extinguisherBodyRigidbody;
-
-        [SerializeField]
         private Transform _pullReference;
 
         [Header("Pull Constraint")]
@@ -55,13 +52,6 @@ namespace EmergencyXR.FireExtinguisher
         [SerializeField]
         private UnityEvent _whenPinRemoved;
 
-        [Header("Debug")]
-        [SerializeField]
-        private bool _debugLogs = false;
-
-        [SerializeField]
-        private string _lastDebugMessage;
-
         public bool IsPinRemoved { get; private set; }
         public float CurrentPullDistance { get; private set; }
 
@@ -78,10 +68,6 @@ namespace EmergencyXR.FireExtinguisher
             _pinInteractable = GetComponent<GrabInteractable>();
             _indexOnlyGate = GetComponent<IndexOnlyGrabbable>();
             _pinRigidbody = GetComponent<Rigidbody>();
-            if (transform.parent != null)
-            {
-                _extinguisherBodyRigidbody = transform.parent.GetComponentInParent<Rigidbody>();
-            }
         }
 
         private void Awake()
@@ -104,10 +90,6 @@ namespace EmergencyXR.FireExtinguisher
             if (_pinInteractable != null && _pinInteractable.Rigidbody != _pinRigidbody)
             {
                 _pinInteractable.InjectRigidbody(_pinRigidbody);
-                if (_debugLogs)
-                {
-                    Debug.Log($"[SafetyPinPullConstraint:{name}] Pin interactable rigidbody was re-bound to pin rigidbody.", this);
-                }
             }
 
             if (_pinRigidbody != null)
@@ -124,16 +106,6 @@ namespace EmergencyXR.FireExtinguisher
             if (_pullReference == null)
             {
                 _pullReference = transform;
-            }
-
-            if (_extinguisherBodyRigidbody == null)
-            {
-                Transform search = _pullReference;
-                while (search != null && _extinguisherBodyRigidbody == null)
-                {
-                    _extinguisherBodyRigidbody = search.GetComponent<Rigidbody>();
-                    search = search.parent;
-                }
             }
 
             // 분리 전 기준 오프셋을 pullReference 공간으로 저장합니다.
@@ -171,7 +143,6 @@ namespace EmergencyXR.FireExtinguisher
                     if (!_gravityEnabledAfterRelease)
                     {
                         _gravityEnabledAfterRelease = true;
-                        _lastDebugMessage = "Pin released by hand (gravity enabled)";
                     }
                 }
                 return;
@@ -185,13 +156,11 @@ namespace EmergencyXR.FireExtinguisher
                     CurrentPullDistance = 0f;
                     _currentSignedDistance = 0f;
                     ForceAxisOnlyPose(0f);
-                    _lastDebugMessage = "No active grab on pin (returned to socket)";
                 }
                 else
                 {
                     // 마지막 부호 방향 위치를 유지해 릴리즈 시 반대축으로 튀는 문제를 막습니다.
                     ForceAxisOnlyPose(_currentSignedDistance);
-                    _lastDebugMessage = "No active grab on pin (holding last constrained pose)";
                 }
                 return;
             }
@@ -233,15 +202,6 @@ namespace EmergencyXR.FireExtinguisher
                 _gravityEnabledAfterRelease = false;
 
                 _whenPinRemoved?.Invoke();
-                _lastDebugMessage = $"Pin removed at distance {progressDistance:0.000} (waiting hand release)";
-                if (_debugLogs)
-                {
-                    Debug.Log($"[SafetyPinPullConstraint:{name}] {_lastDebugMessage}", this);
-                }
-            }
-            else
-            {
-                _lastDebugMessage = $"Pulling... current={CurrentPullDistance:0.000} / target={_pullDistance:0.000}";
             }
         }
 
@@ -278,13 +238,11 @@ namespace EmergencyXR.FireExtinguisher
         {
             if (_pinInteractable == null)
             {
-                _lastDebugMessage = "Pin interactable is null";
                 return false;
             }
 
             if (_indexOnlyGate != null && !_indexOnlyGate.HasValidSelectingInteractor)
             {
-                _lastDebugMessage = "Blocked by IndexOnly gate";
                 return false;
             }
 
@@ -309,19 +267,6 @@ namespace EmergencyXR.FireExtinguisher
             }
 
             return false;
-        }
-
-        private void OnValidate()
-        {
-            if (_pinInteractable != null && _pinRigidbody != null && _pinInteractable.Rigidbody != _pinRigidbody)
-            {
-                _lastDebugMessage = "Pin Interactable Rigidbody is not the pin's Rigidbody.";
-            }
-
-            if (_pinRigidbody != null && _extinguisherBodyRigidbody != null && _pinRigidbody == _extinguisherBodyRigidbody)
-            {
-                _lastDebugMessage = "Pin and extinguisher are sharing same Rigidbody. Separate them.";
-            }
         }
 
         private Vector3 GetAxisVector()
