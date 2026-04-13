@@ -9,7 +9,7 @@ public class FireController : MonoBehaviour
 
     [SerializeField] List<ParticleSystem> fireParticles;
     List<int> fireParticlesorginalemission;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
 
     private void Start()
     {
@@ -22,7 +22,7 @@ public class FireController : MonoBehaviour
     }
     void UpdateFire()
     {
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < fireParticles.Count; i++)
         {
             var emission = fireParticles[i].emission;
             emission.rateOverTime = fireParticlesorginalemission[i] * FireIntensity;
