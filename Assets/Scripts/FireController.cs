@@ -13,15 +13,17 @@ public class FireController : MonoBehaviour
 
     private void Start()
     {
+        fireIntensity = 1f;
         fireParticlesorginalemission = new List<int>();
         foreach (ParticleSystem p in fireParticles)
         {
             fireParticlesorginalemission.Add(Mathf.RoundToInt(p.emission.rateOverTime.constant));
         }
-        StartCoroutine(FireCor());
     }
     void UpdateFire()
     {
+        if (fireIntensity <= 0)
+            Destroy(gameObject);
         for(int i = 0; i < fireParticles.Count; i++)
         {
             var emission = fireParticles[i].emission;
@@ -43,5 +45,10 @@ public class FireController : MonoBehaviour
             t += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        FireIntensity -= 0.01f;
     }
 }
