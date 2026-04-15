@@ -14065,6 +14065,7 @@ struct AEDLidOpener_tC673FE87EB7A423AB146C4CA418B83C91057190E  : public MonoBeha
 struct AEDLidPressButton_tCF2C792C19A36C511D5F86D9201730141684D495  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
 {
 	AEDLidOpener_tC673FE87EB7A423AB146C4CA418B83C91057190E* ___lidOpener;
+	bool ___isInside;
 	bool ___pressed;
 };
 struct AlertViewHUD_tAE5612BFF93B2F25FE37EE2209D9D366C0313FEC  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
@@ -20160,9 +20161,9 @@ IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable16739[2] =
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable16741[5] = 
 {
 	static_cast<int32_t>(offsetof(AEDLidOpener_tC673FE87EB7A423AB146C4CA418B83C91057190E, ___lidObject)),static_cast<int32_t>(offsetof(AEDLidOpener_tC673FE87EB7A423AB146C4CA418B83C91057190E, ___openedRotation)),static_cast<int32_t>(offsetof(AEDLidOpener_tC673FE87EB7A423AB146C4CA418B83C91057190E, ___openSpeed)),static_cast<int32_t>(offsetof(AEDLidOpener_tC673FE87EB7A423AB146C4CA418B83C91057190E, ___isOpening)),static_cast<int32_t>(offsetof(AEDLidOpener_tC673FE87EB7A423AB146C4CA418B83C91057190E, ___targetRotation)),};
-IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable16742[2] = 
+IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable16742[3] = 
 {
-	static_cast<int32_t>(offsetof(AEDLidPressButton_tCF2C792C19A36C511D5F86D9201730141684D495, ___lidOpener)),static_cast<int32_t>(offsetof(AEDLidPressButton_tCF2C792C19A36C511D5F86D9201730141684D495, ___pressed)),};
+	static_cast<int32_t>(offsetof(AEDLidPressButton_tCF2C792C19A36C511D5F86D9201730141684D495, ___lidOpener)),static_cast<int32_t>(offsetof(AEDLidPressButton_tCF2C792C19A36C511D5F86D9201730141684D495, ___isInside)),static_cast<int32_t>(offsetof(AEDLidPressButton_tCF2C792C19A36C511D5F86D9201730141684D495, ___pressed)),};
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable16743[4] = 
 {
 	static_cast<int32_t>(offsetof(Section_t50C894D0A717C2368EBAAE5477D4E8626D0B5401, ___heading)),static_cast<int32_t>(offsetof(Section_t50C894D0A717C2368EBAAE5477D4E8626D0B5401, ___text)),static_cast<int32_t>(offsetof(Section_t50C894D0A717C2368EBAAE5477D4E8626D0B5401, ___linkText)),static_cast<int32_t>(offsetof(Section_t50C894D0A717C2368EBAAE5477D4E8626D0B5401, ___url)),};
