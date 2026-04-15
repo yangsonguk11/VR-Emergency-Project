@@ -120,7 +120,6 @@ namespace EmergencyXR.FireExtinguisher
 
         private void Update()
         {
-            // 릴리즈 직후 1~2프레임의 인터랙터 회전 잔여 영향을 덮어씁니다.
             if (IsPinRemoved)
             {
                 return;
