@@ -47,6 +47,10 @@ public class FireController : MonoBehaviour
         }
     }
 
+    public void ParticleCollide()
+    {
+        FireIntensity -= 0.01f;
+    }
     private void OnParticleCollision(GameObject other)
     {
         FireIntensity -= 0.01f;

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7636537208295775829}
   - component: {fileID: 2846731795233471590}
   - component: {fileID: 829391410114692932}
+  - component: {fileID: 759390628959203545}
   m_Layer: 6
   m_Name: ExtParticle
   m_TagString: Untagged
@@ -3800,15 +3801,16 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
-    inside: 2
-    outside: 2
+    inside: 0
+    outside: 0
     enter: 2
-    exit: 2
-    colliderQueryMode: 0
+    exit: 0
+    colliderQueryMode: 2
     radiusScale: 1
-    primitives: []
+    primitives:
+    - {fileID: 0}
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -4836,3 +4838,16 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &759390628959203545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5422971577811438377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d834a82da1017404699dec16e06da4ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExtParticleController
+  PS: {fileID: 2846731795233471590}
