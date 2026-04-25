@@ -2,33 +2,32 @@ using UnityEngine;
 
 public class AEDLidOpener : MonoBehaviour
 {
-    public Transform lidObject;
-    public Vector3 openedRotation = new Vector3(-100f, 0f, 0f);
-    public float openSpeed = 2f;
+    public Transform lidObject;   // ¶Ñ²± ¿ÀºêÁ§Æ® (SM_AEDPart02)
+    public float openAngle = 110f;
+    public float speed = 120f;
 
     private bool isOpening = false;
-    private Quaternion targetRotation;
-
-    private void Start()
-    {
-        if (lidObject != null)
-            targetRotation = Quaternion.Euler(openedRotation);
-    }
-
-    private void Update()
-    {
-        if (!isOpening || lidObject == null)
-            return;
-
-        lidObject.localRotation = Quaternion.Slerp(
-            lidObject.localRotation,
-            targetRotation,
-            Time.deltaTime * openSpeed
-        );
-    }
+    private float currentAngle = 0f;
 
     public void OpenLid()
     {
+        Debug.Log("OpenLid È£ÃâµÊ");
         isOpening = true;
+    }
+
+    void Update()
+    {
+        if (isOpening)
+        {
+            Debug.Log("¶Ñ²± ¿©´Â Áß");
+
+            if (currentAngle < openAngle)
+            {
+                float delta = speed * Time.deltaTime;
+                currentAngle += delta;
+
+                lidObject.localRotation = Quaternion.Euler(-currentAngle, 0f, 0f);
+            }
+        }
     }
 }
