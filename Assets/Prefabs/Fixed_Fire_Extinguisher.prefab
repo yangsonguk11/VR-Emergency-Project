@@ -7926,8 +7926,8 @@ MonoBehaviour:
   _indexOnlyGate: {fileID: 2595269715298216050}
   _pinRigidbody: {fileID: 3223179992660028825}
   _pullReference: {fileID: 0}
-  _pullAxis: 2
-  _pullTowardNegativeAxis: 1
+  _pullAxis: 0
+  _pullTowardNegativeAxis: 0
   _allowEitherDirection: 0
   _pullDistance: 0.04
   _returnToSocketOnRelease: 0
