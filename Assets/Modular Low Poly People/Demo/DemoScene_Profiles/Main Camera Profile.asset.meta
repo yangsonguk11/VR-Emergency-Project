@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3c227060c2ee4c84fb158d3da47ddbd6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 260909
+  packageName: Modular Low Poly People
+  packageVersion: 1.0
+  assetPath: Assets/Modular Low Poly People/Demo/DemoScene_Profiles/Main Camera Profile.asset
+  uploadId: 603344

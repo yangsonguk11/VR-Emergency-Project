@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b6bcac60ecc8f144388d61df6c0487e8
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 260909
+  packageName: Modular Low Poly People
+  packageVersion: 1.0
+  assetPath: Assets/Modular Low Poly People/Demo/Animations/Walk.anim
+  uploadId: 603344
