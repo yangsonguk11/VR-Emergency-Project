@@ -334,7 +334,9 @@
           },
           {
             "name": "LineRenderer",
-            "scenes": [],
+            "scenes": [
+              "Assets/Scenes/AED_Scene.unity"
+            ],
             "dependencyType": 0,
             "icon": null
           },
