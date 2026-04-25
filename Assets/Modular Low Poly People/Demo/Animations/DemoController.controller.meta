@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 110ae4982f7304542b81ce63f50dac82
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 260909
+  packageName: Modular Low Poly People
+  packageVersion: 1.0
+  assetPath: Assets/Modular Low Poly People/Demo/Animations/DemoController.controller
+  uploadId: 603344
