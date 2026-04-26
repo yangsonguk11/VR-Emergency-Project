@@ -1887,6 +1887,7 @@ GameObject:
   - component: {fileID: 550018765978281785}
   - component: {fileID: 7211820923158851383}
   - component: {fileID: 7156234876108290056}
+  - component: {fileID: 8076395658437771012}
   m_Layer: 6
   m_Name: SprayPoint
   m_TagString: Untagged
@@ -2045,7 +2046,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 8
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -2746,7 +2747,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 15
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5676,13 +5677,13 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
-    inside: 1
+    inside: 0
     outside: 0
-    enter: 0
+    enter: 2
     exit: 0
-    colliderQueryMode: 0
+    colliderQueryMode: 2
     radiusScale: 1
     primitives: []
   SubModule:
@@ -6712,6 +6713,19 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &8076395658437771012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5800396191989006908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d834a82da1017404699dec16e06da4ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExtParticleController
+  PS: {fileID: 7211820923158851383}
 --- !u!1 &5877302209780634678
 GameObject:
   m_ObjectHideFlags: 0
