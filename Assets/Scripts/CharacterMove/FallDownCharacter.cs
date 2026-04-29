@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +10,7 @@ public class FallDownCharacter : MonoBehaviour
     private PatrolNav patrolNav;
     private NavMeshAgent agent;
 
-    public HelperAI helper;
+    public List<HelperAI> helpers; // 여러 명
 
     public AudioClip fallSound;
     private AudioSource audioSource;
@@ -20,7 +21,7 @@ public class FallDownCharacter : MonoBehaviour
         patrolNav = GetComponent<PatrolNav>();
         agent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
-        
+
         Invoke(nameof(FallDown), fallDelay);
     }
 
@@ -51,8 +52,12 @@ public class FallDownCharacter : MonoBehaviour
             animator.SetTrigger("FallDown");
         }
 
-        if (helper != null)
-            helper.CallToTarget(transform);
+        // 여러 NPC 호출
+        foreach (var helper in helpers)
+        {
+            if (helper != null)
+                helper.CallToTarget(transform);
+        }
 
         ClothesChangeUI clothesUI = GetComponent<ClothesChangeUI>();
 

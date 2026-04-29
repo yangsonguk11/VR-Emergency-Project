@@ -3,8 +3,10 @@ using UnityEngine.AI;
 
 public class HelperAI : MonoBehaviour
 {
-    public Transform target; // 쓰러진 캐릭터
+    public Transform target;
     public float stopDistance = 1.5f;
+
+    public bool willCall = false; // true인 캐릭터만 전화 애니메이션
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -22,15 +24,19 @@ public class HelperAI : MonoBehaviour
 
         agent.SetDestination(target.position);
 
-        // 도착 체크
         if (!agent.pathPending && agent.remainingDistance < stopDistance)
         {
             agent.isStopped = true;
+            agent.ResetPath();
 
             if (animator != null)
             {
                 animator.SetBool("IsMoving", false);
-                animator.SetTrigger("Call"); // 전화 애니메이션
+
+                if (willCall)
+                    animator.SetTrigger("Call");
+                else
+                    animator.SetTrigger("IdleReact");
             }
 
             isCalled = false;
