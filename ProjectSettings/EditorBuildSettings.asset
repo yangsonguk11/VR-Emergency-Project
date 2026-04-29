@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/InteractionTest.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/MainMenu.unity
+    guid: aa6d988d8a957b34ebb40f2f75d5809b
+  - enabled: 1
+    path: Assets/Scenes/FireScene.unity
+    guid: 7c20af9e8785c2848beba54038b7d454
+  - enabled: 1
+    path: Assets/Scenes/ExtinguisherScene.unity
+    guid: dfb810467ac0d4042b59b5a4a544f70d
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 573873d5420e0344ba9a97fd466a82f3, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
