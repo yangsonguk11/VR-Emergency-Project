@@ -1193,6 +1193,7 @@ GameObject:
   - component: {fileID: 8078626599212920091}
   - component: {fileID: 6095795363070746552}
   - component: {fileID: 8046737345072515936}
+  - component: {fileID: 9178979681076608404}
   m_Layer: 6
   m_Name: Fire_Extinguisher_Body
   m_TagString: Untagged
@@ -1323,6 +1324,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0.4}
+--- !u!114 &9178979681076608404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4645364315535032584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a1bc992571301d4a9602ac95ef4c71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Oculus.Interaction::Oculus.Interaction.GrabInteractable
+  _interactorFilters: []
+  _maxInteractors: -1
+  _maxSelectingInteractors: -1
+  _data: {fileID: 0}
+  _pointableElement: {fileID: 1972562611314497168}
+  _rigidbody: {fileID: 5203048859941452299}
+  _grabSource: {fileID: 0}
+  _useClosestPointAsGrabSource: 0
+  _releaseDistance: 0
+  _resetGrabOnGrabsUpdated: 1
+  _physicsGrabbable: {fileID: 0}
 --- !u!1 &4694745634206639396
 GameObject:
   m_ObjectHideFlags: 0
