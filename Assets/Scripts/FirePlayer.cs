@@ -24,7 +24,7 @@ public class FirePlayer : MonoBehaviour
         if (other.gameObject.CompareTag("Smoke"))
         {
             SmokeGauge += 1;
-            if (SmokeGauge >= 100)
+            if (SmokeGauge >= 1000)
             {
                 GetComponent<Collider>().enabled = false;
                 GameOver();
