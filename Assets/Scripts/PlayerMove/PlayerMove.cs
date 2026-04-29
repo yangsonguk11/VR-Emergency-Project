@@ -4,6 +4,9 @@ public class PlayerMove : MonoBehaviour
 {
     public float speed = 5f;
     public float mouseSensitivity = 100f;
+    public float gravity = -9.81f;
+    private Vector3 velocity;
+
 
     float xRotation = 0f;
     CharacterController controller;
@@ -11,7 +14,7 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -22,6 +25,18 @@ public class PlayerMove : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
+
+        // 바닥에 닿아 있으면 아래로 살짝 눌러줌
+        if (controller.isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+
+        // 중력 적용
+        velocity.y += gravity * Time.deltaTime;
+
+        // 중력 이동
+        controller.Move(velocity * Time.deltaTime);
 
         // 마우스 회전
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
