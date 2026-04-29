@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 625bd4a4eb4b5fa4ba70a402269e103d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 260909
+  packageName: Modular Low Poly People
+  packageVersion: 1.0
+  assetPath: Assets/Modular Low Poly People/Demo/Script/Orbit_Cam.cs
+  uploadId: 603344

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f123275e54a8a3e4593281418f533b9d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 260909
+  packageName: Modular Low Poly People
+  packageVersion: 1.0
+  assetPath: Assets/Modular Low Poly People/Demo/Script/UI_Logic.cs
+  uploadId: 603344
