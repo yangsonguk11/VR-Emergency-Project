@@ -14107,6 +14107,7 @@ struct AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A  : public MonoBeha
 	HandGrabInteractable_tAA4FA87F97EBE085B00C9989B64494E72E717127* ___padHandGrab;
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___rotationOffset;
 	bool ___isAttached;
+	bool ___hasBeenGrabbed;
 };
 struct AEDPadGrabState_t67EBEED6F3A2DD829EF7E1AA9B1865CD79CD97CC  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
 {
@@ -19816,9 +19817,9 @@ IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable16457[15] =
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable16458[3] = 
 {
 	static_cast<int32_t>(offsetof(AEDLidPressButton_tCF2C792C19A36C511D5F86D9201730141684D495, ___lidOpener)),static_cast<int32_t>(offsetof(AEDLidPressButton_tCF2C792C19A36C511D5F86D9201730141684D495, ___isNearButton)),static_cast<int32_t>(offsetof(AEDLidPressButton_tCF2C792C19A36C511D5F86D9201730141684D495, ___isOpened)),};
-IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable16459[10] = 
+IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable16459[11] = 
 {
-	static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___attachTarget)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___bodyCollider)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___attachDistance)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___surfaceOffset)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___padRigidbody)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___padGrabbable)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___padGrab)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___padHandGrab)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___rotationOffset)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___isAttached)),};
+	static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___attachTarget)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___bodyCollider)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___attachDistance)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___surfaceOffset)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___padRigidbody)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___padGrabbable)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___padGrab)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___padHandGrab)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___rotationOffset)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___isAttached)),static_cast<int32_t>(offsetof(AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A, ___hasBeenGrabbed)),};
 IL2CPP_EXTERN_C const int32_t g_FieldOffsetTable16460[5] = 
 {
 	static_cast<int32_t>(offsetof(AEDPadGrabState_t67EBEED6F3A2DD829EF7E1AA9B1865CD79CD97CC, ___padGrabbable)),static_cast<int32_t>(offsetof(AEDPadGrabState_t67EBEED6F3A2DD829EF7E1AA9B1865CD79CD97CC, ___aedGrabbable)),static_cast<int32_t>(offsetof(AEDPadGrabState_t67EBEED6F3A2DD829EF7E1AA9B1865CD79CD97CC, ___aedGrab)),static_cast<int32_t>(offsetof(AEDPadGrabState_t67EBEED6F3A2DD829EF7E1AA9B1865CD79CD97CC, ___aedHandGrab)),static_cast<int32_t>(offsetof(AEDPadGrabState_t67EBEED6F3A2DD829EF7E1AA9B1865CD79CD97CC, ___wasGrabbed)),};

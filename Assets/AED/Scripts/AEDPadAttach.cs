@@ -7,8 +7,8 @@ public class AEDPadAttach : MonoBehaviour
     [Header("Attach Target")]
     public Transform attachTarget;
     public Collider bodyCollider;
-    public float attachDistance = 0.12f;
-    public float surfaceOffset = 0.01f;
+    public float attachDistance = 0.25f;
+    public float surfaceOffset = 0.03f;
 
     [Header("Pad Components")]
     public Rigidbody padRigidbody;
@@ -20,10 +20,19 @@ public class AEDPadAttach : MonoBehaviour
     public Vector3 rotationOffset = new Vector3(90f, 0f, 0f);
 
     private bool isAttached = false;
+    private bool hasBeenGrabbed = false;
 
     private void Update()
     {
         if (isAttached)
+            return;
+
+        if (padGrabbable != null && padGrabbable.SelectingPointsCount > 0)
+        {
+            hasBeenGrabbed = true;
+        }
+
+        if (!hasBeenGrabbed)
             return;
 
         if (attachTarget == null || bodyCollider == null)
@@ -48,24 +57,17 @@ public class AEDPadAttach : MonoBehaviour
     {
         isAttached = true;
 
-        Vector3 outwardDirection = (attachTarget.position - bodyCollider.transform.position).normalized;
-
-        if (outwardDirection == Vector3.zero)
-            outwardDirection = bodyCollider.transform.forward;
-
-        transform.position = surfacePoint + outwardDirection * surfaceOffset;
-
-        Quaternion surfaceRotation = Quaternion.LookRotation(outwardDirection);
-        transform.rotation = surfaceRotation * Quaternion.Euler(rotationOffset);
-
-        transform.SetParent(bodyCollider.transform);
-
         if (padRigidbody != null)
         {
             padRigidbody.linearVelocity = Vector3.zero;
             padRigidbody.angularVelocity = Vector3.zero;
             padRigidbody.isKinematic = true;
         }
+
+        transform.position = attachTarget.position;
+        transform.rotation = attachTarget.rotation * Quaternion.Euler(rotationOffset);
+
+        transform.SetParent(bodyCollider.transform);
 
         if (padGrabbable != null)
             padGrabbable.enabled = false;

@@ -1472,6 +1472,7 @@ struct AEDPadAttach_t516A8D3C1933B03E168E59AB6CF11BA44B6CED5A  : public MonoBeha
 	HandGrabInteractable_tAA4FA87F97EBE085B00C9989B64494E72E717127* ___padHandGrab;
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___rotationOffset;
 	bool ___isAttached;
+	bool ___hasBeenGrabbed;
 };
 struct AEDPadGrabState_t67EBEED6F3A2DD829EF7E1AA9B1865CD79CD97CC  : public MonoBehaviour_t532A11E69716D348D8AA7F854AFCBFCB8AD17F71
 {
@@ -2131,6 +2132,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* Object_get_name_mAC2F6B897CF1303BA4
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR String_t* String_Concat_m9E3155FB84015C823606188F53B47CB44C444991 (String_t* ___0_str0, String_t* ___1_str1, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool OVRInput_GetDown_mEC4F71AEC93D3AF1A041934CA4C61680C6DB9AC7 (int32_t ___0_virtualMask, int32_t ___1_controllerMask, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AEDLidOpener_OpenLid_m2EEEA62FB73DDCCCF55A83C4217F7CD1F4531126 (AEDLidOpener_tC673FE87EB7A423AB146C4CA418B83C91057190E* __this, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t PointableElement_get_SelectingPointsCount_mAB3FB285F9B11D8A4F4FBE85EBCA7AAC11CC98A7 (PointableElement_t0F91651B1FF972C5FBC7E9476BBA548F38EF9CF7* __this, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605 (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C* ___0_x, Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C* ___1_y, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Rigidbody_get_linearVelocity_m367F5415641E5FB968440A91BAE2FCB8CAEA2C8C (Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* __this, const RuntimeMethod* method) ;
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_a, float ___1_d, const RuntimeMethod* method) ;
@@ -2156,7 +2158,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Transform_set_rotation_m61340DE74726CF0F
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Transform_SetParent_m6677538B60246D958DD91F931C50F969CCBB5250 (Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* __this, Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* ___0_p, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* Component_get_gameObject_m57AEFBB14DB39EC476F740BA000E170355DE691B (Component_t39FBE53E5EFCF4409111FB22C15FF73717632EC3* __this, const RuntimeMethod* method) ;
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* __this, float ___0_x, float ___1_y, float ___2_z, const RuntimeMethod* method) ;
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t PointableElement_get_SelectingPointsCount_mAB3FB285F9B11D8A4F4FBE85EBCA7AAC11CC98A7 (PointableElement_t0F91651B1FF972C5FBC7E9476BBA548F38EF9CF7* __this, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AEDPadGrabState_OnPadGrabbed_m34312A5B6FA0215B2BFD35802C8CC43C9FA246D5 (AEDPadGrabState_t67EBEED6F3A2DD829EF7E1AA9B1865CD79CD97CC* __this, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AEDPadGrabState_OnPadReleased_m26F1F04C2DAC950AA349B21A4A3EB34A31DE5617 (AEDPadGrabState_t67EBEED6F3A2DD829EF7E1AA9B1865CD79CD97CC* __this, const RuntimeMethod* method) ;
 inline LineRenderer_tEFEF960672DB69CB14B6D181FAE6292F0CF8B63D* Component_GetComponent_TisLineRenderer_tEFEF960672DB69CB14B6D181FAE6292F0CF8B63D_m4F17B3CA1E7FFB03C7682312A59B9185E0F67C49 (Component_t39FBE53E5EFCF4409111FB22C15FF73717632EC3* __this, const RuntimeMethod* method)
@@ -2858,7 +2859,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AEDPadAttach_Update_m6670B4A8DF64EFA8839
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_0;
 	memset((&V_0), 0, sizeof(V_0));
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:26>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:27>
 		bool L_0 = __this->___isAttached;
 		if (!L_0)
 		{
@@ -2866,114 +2867,155 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AEDPadAttach_Update_m6670B4A8DF64EFA8839
 		}
 	}
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:27>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:28>
 		return;
 	}
 
 IL_0009:
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:29>
-		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_1 = __this->___attachTarget;
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:30>
+		Grabbable_tC5F191DABDA6ADE2D8270476D37B4E122C1387D3* L_1 = __this->___padGrabbable;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_2;
-		L_2 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_1, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
-		if (L_2)
+		L_2 = Object_op_Inequality_mD0BE578448EAA61948F25C32F8DD55AB1F778602(L_1, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		if (!L_2)
 		{
-			goto IL_0025;
+			goto IL_002c;
 		}
 	}
 	{
-		Collider_t1CC3163924FCD6C4CC2E816373A929C1E3D55E76* L_3 = __this->___bodyCollider;
-		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
-		bool L_4;
-		L_4 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_3, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
-		if (!L_4)
+		Grabbable_tC5F191DABDA6ADE2D8270476D37B4E122C1387D3* L_3 = __this->___padGrabbable;
+		NullCheck(L_3);
+		int32_t L_4;
+		L_4 = PointableElement_get_SelectingPointsCount_mAB3FB285F9B11D8A4F4FBE85EBCA7AAC11CC98A7(L_3, NULL);
+		if ((((int32_t)L_4) <= ((int32_t)0)))
 		{
-			goto IL_0026;
+			goto IL_002c;
 		}
+	}
+	{
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:32>
+		__this->___hasBeenGrabbed = (bool)1;
 	}
 
-IL_0025:
+IL_002c:
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:30>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:35>
+		bool L_5 = __this->___hasBeenGrabbed;
+		if (L_5)
+		{
+			goto IL_0035;
+		}
+	}
+	{
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:36>
 		return;
 	}
 
-IL_0026:
-	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:32>
-		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_5 = __this->___padRigidbody;
-		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
-		bool L_6;
-		L_6 = Object_op_Inequality_mD0BE578448EAA61948F25C32F8DD55AB1F778602(L_5, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
-		if (!L_6)
-		{
-			goto IL_006a;
-		}
-	}
-	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:34>
-		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_7 = __this->___padRigidbody;
-		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_8 = L_7;
-		NullCheck(L_8);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_9;
-		L_9 = Rigidbody_get_linearVelocity_m367F5415641E5FB968440A91BAE2FCB8CAEA2C8C(L_8, NULL);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_10;
-		L_10 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_9, (0.850000024f), NULL);
-		NullCheck(L_8);
-		Rigidbody_set_linearVelocity_m29AE03D5FC079EAD4202FCF72E2AEBDC19363985(L_8, L_10, NULL);
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:35>
-		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_11 = __this->___padRigidbody;
-		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_12 = L_11;
-		NullCheck(L_12);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_13;
-		L_13 = Rigidbody_get_angularVelocity_m4EACCFCF15CA441CCD53B24322C2E7B8EEBDF6A8(L_12, NULL);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_14;
-		L_14 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_13, (0.850000024f), NULL);
-		NullCheck(L_12);
-		Rigidbody_set_angularVelocity_m23266B4E52BF0D2E65CC984AC73CC40B8D4A27E0(L_12, L_14, NULL);
-	}
-
-IL_006a:
+IL_0035:
 	{
 		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:38>
-		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_15;
-		L_15 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
-		NullCheck(L_15);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_16;
-		L_16 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_15, NULL);
-		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_17 = __this->___attachTarget;
-		NullCheck(L_17);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_18;
-		L_18 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_17, NULL);
-		float L_19;
-		L_19 = Vector3_Distance_m2314DB9B8BD01157E013DF87BEA557375C7F9FF9_inline(L_16, L_18, NULL);
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:40>
-		float L_20 = __this->___attachDistance;
-		if ((!(((float)L_19) <= ((float)L_20))))
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_6 = __this->___attachTarget;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_7;
+		L_7 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_6, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		if (L_7)
 		{
-			goto IL_00ab;
+			goto IL_0051;
 		}
 	}
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:42>
-		Collider_t1CC3163924FCD6C4CC2E816373A929C1E3D55E76* L_21 = __this->___bodyCollider;
+		Collider_t1CC3163924FCD6C4CC2E816373A929C1E3D55E76* L_8 = __this->___bodyCollider;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_9;
+		L_9 = Object_op_Equality_mB6120F782D83091EF56A198FCEBCF066DB4A9605(L_8, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		if (!L_9)
+		{
+			goto IL_0052;
+		}
+	}
+
+IL_0051:
+	{
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:39>
+		return;
+	}
+
+IL_0052:
+	{
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:41>
+		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_10 = __this->___padRigidbody;
+		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
+		bool L_11;
+		L_11 = Object_op_Inequality_mD0BE578448EAA61948F25C32F8DD55AB1F778602(L_10, (Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C*)NULL, NULL);
+		if (!L_11)
+		{
+			goto IL_0096;
+		}
+	}
+	{
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:43>
+		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_12 = __this->___padRigidbody;
+		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_13 = L_12;
+		NullCheck(L_13);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_14;
+		L_14 = Rigidbody_get_linearVelocity_m367F5415641E5FB968440A91BAE2FCB8CAEA2C8C(L_13, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_15;
+		L_15 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_14, (0.850000024f), NULL);
+		NullCheck(L_13);
+		Rigidbody_set_linearVelocity_m29AE03D5FC079EAD4202FCF72E2AEBDC19363985(L_13, L_15, NULL);
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:44>
+		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_16 = __this->___padRigidbody;
+		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_17 = L_16;
+		NullCheck(L_17);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_18;
+		L_18 = Rigidbody_get_angularVelocity_m4EACCFCF15CA441CCD53B24322C2E7B8EEBDF6A8(L_17, NULL);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_19;
+		L_19 = Vector3_op_Multiply_m87BA7C578F96C8E49BB07088DAAC4649F83B0353_inline(L_18, (0.850000024f), NULL);
+		NullCheck(L_17);
+		Rigidbody_set_angularVelocity_m23266B4E52BF0D2E65CC984AC73CC40B8D4A27E0(L_17, L_19, NULL);
+	}
+
+IL_0096:
+	{
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:47>
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_20;
+		L_20 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
+		NullCheck(L_20);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_21;
+		L_21 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_20, NULL);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_22 = __this->___attachTarget;
 		NullCheck(L_22);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_23;
 		L_23 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_22, NULL);
-		NullCheck(L_21);
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_24;
-		L_24 = Collider_ClosestPoint_mFFF9B6F6CF9F18B22B325835A3E2E78A1C03BFCB(L_21, L_23, NULL);
-		V_0 = L_24;
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:43>
-		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_25 = V_0;
-		AEDPadAttach_AttachToBody_mDE51864BC2FF729AD793AAB5AD43D2311E6A7498(__this, L_25, NULL);
+		float L_24;
+		L_24 = Vector3_Distance_m2314DB9B8BD01157E013DF87BEA557375C7F9FF9_inline(L_21, L_23, NULL);
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:49>
+		float L_25 = __this->___attachDistance;
+		if ((!(((float)L_24) <= ((float)L_25))))
+		{
+			goto IL_00d7;
+		}
+	}
+	{
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:51>
+		Collider_t1CC3163924FCD6C4CC2E816373A929C1E3D55E76* L_26 = __this->___bodyCollider;
+		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_27 = __this->___attachTarget;
+		NullCheck(L_27);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_28;
+		L_28 = Transform_get_position_m69CD5FA214FDAE7BB701552943674846C220FDE1(L_27, NULL);
+		NullCheck(L_26);
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_29;
+		L_29 = Collider_ClosestPoint_mFFF9B6F6CF9F18B22B325835A3E2E78A1C03BFCB(L_26, L_28, NULL);
+		V_0 = L_29;
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:52>
+		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_30 = V_0;
+		AEDPadAttach_AttachToBody_mDE51864BC2FF729AD793AAB5AD43D2311E6A7498(__this, L_30, NULL);
 	}
 
-IL_00ab:
+IL_00d7:
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:45>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:54>
 		return;
 	}
 }
@@ -2995,9 +3037,9 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AEDPadAttach_AttachToBody_mDE51864BC2FF7
 	Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 V_2;
 	memset((&V_2), 0, sizeof(V_2));
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:49>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:58>
 		__this->___isAttached = (bool)1;
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:51>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:60>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_0 = __this->___attachTarget;
 		NullCheck(L_0);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_1;
@@ -3015,7 +3057,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AEDPadAttach_AttachToBody_mDE51864BC2FF7
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_6;
 		L_6 = Vector3_get_normalized_m736BBF65D5CDA7A18414370D15B4DFCC1E466F07_inline((&V_2), NULL);
 		V_0 = L_6;
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:53>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:62>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_7 = V_0;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_8;
 		L_8 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
@@ -3027,7 +3069,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AEDPadAttach_AttachToBody_mDE51864BC2FF7
 		}
 	}
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:54>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:63>
 		Collider_t1CC3163924FCD6C4CC2E816373A929C1E3D55E76* L_10 = __this->___bodyCollider;
 		NullCheck(L_10);
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_11;
@@ -3040,7 +3082,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AEDPadAttach_AttachToBody_mDE51864BC2FF7
 
 IL_004e:
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:56>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:65>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_13;
 		L_13 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_14 = ___0_surfacePoint;
@@ -3052,12 +3094,12 @@ IL_004e:
 		L_18 = Vector3_op_Addition_m78C0EC70CB66E8DCAC225743D82B268DAEE92067_inline(L_14, L_17, NULL);
 		NullCheck(L_13);
 		Transform_set_position_mA1A817124BB41B685043DED2A9BA48CDF37C4156(L_13, L_18, NULL);
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:58>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:67>
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_19 = V_0;
 		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_20;
 		L_20 = Quaternion_LookRotation_mDB2CCA75B8E1AB98104F2A6E1A1EA57D0D1298D7_inline(L_19, NULL);
 		V_1 = L_20;
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:59>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:68>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_21;
 		L_21 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
 		Quaternion_tDA59F214EF07D7700B26E40E562F267AF7306974 L_22 = V_1;
@@ -3068,7 +3110,7 @@ IL_004e:
 		L_25 = Quaternion_op_Multiply_mCB375FCCC12A2EC8F9EB824A1BFB4453B58C2012_inline(L_22, L_24, NULL);
 		NullCheck(L_21);
 		Transform_set_rotation_m61340DE74726CF0F9946743A727C4D444397331D(L_21, L_25, NULL);
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:61>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:70>
 		Transform_tB27202C6F4E36D225EE28A13E4D662BF99785DB1* L_26;
 		L_26 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(__this, NULL);
 		Collider_t1CC3163924FCD6C4CC2E816373A929C1E3D55E76* L_27 = __this->___bodyCollider;
@@ -3077,7 +3119,7 @@ IL_004e:
 		L_28 = Component_get_transform_m2919A1D81931E6932C7F06D4C2F0AB8DDA9A5371(L_27, NULL);
 		NullCheck(L_26);
 		Transform_SetParent_m6677538B60246D958DD91F931C50F969CCBB5250(L_26, L_28, NULL);
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:63>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:72>
 		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_29 = __this->___padRigidbody;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_30;
@@ -3088,19 +3130,19 @@ IL_004e:
 		}
 	}
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:65>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:74>
 		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_31 = __this->___padRigidbody;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_32;
 		L_32 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
 		NullCheck(L_31);
 		Rigidbody_set_linearVelocity_m29AE03D5FC079EAD4202FCF72E2AEBDC19363985(L_31, L_32, NULL);
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:66>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:75>
 		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_33 = __this->___padRigidbody;
 		Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 L_34;
 		L_34 = Vector3_get_zero_m0C1249C3F25B1C70EAD3CC8B31259975A457AE39_inline(NULL);
 		NullCheck(L_33);
 		Rigidbody_set_angularVelocity_m23266B4E52BF0D2E65CC984AC73CC40B8D4A27E0(L_33, L_34, NULL);
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:67>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:76>
 		Rigidbody_t268697F5A994213ED97393309870968BC1C7393C* L_35 = __this->___padRigidbody;
 		NullCheck(L_35);
 		Rigidbody_set_isKinematic_m6C3FD3EA358DADA3B191F2449CF1C4F8B22695ED(L_35, (bool)1, NULL);
@@ -3108,7 +3150,7 @@ IL_004e:
 
 IL_00de:
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:70>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:79>
 		Grabbable_tC5F191DABDA6ADE2D8270476D37B4E122C1387D3* L_36 = __this->___padGrabbable;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_37;
@@ -3119,7 +3161,7 @@ IL_00de:
 		}
 	}
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:71>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:80>
 		Grabbable_tC5F191DABDA6ADE2D8270476D37B4E122C1387D3* L_38 = __this->___padGrabbable;
 		NullCheck(L_38);
 		Behaviour_set_enabled_mF1DCFE60EB09E0529FE9476CA804A3AA2D72B16A(L_38, (bool)0, NULL);
@@ -3127,7 +3169,7 @@ IL_00de:
 
 IL_00f8:
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:73>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:82>
 		GrabInteractable_t2766291754A7CD7AABE073724B385811213940A8* L_39 = __this->___padGrab;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_40;
@@ -3138,7 +3180,7 @@ IL_00f8:
 		}
 	}
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:74>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:83>
 		GrabInteractable_t2766291754A7CD7AABE073724B385811213940A8* L_41 = __this->___padGrab;
 		NullCheck(L_41);
 		Behaviour_set_enabled_mF1DCFE60EB09E0529FE9476CA804A3AA2D72B16A(L_41, (bool)0, NULL);
@@ -3146,7 +3188,7 @@ IL_00f8:
 
 IL_0112:
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:76>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:85>
 		HandGrabInteractable_tAA4FA87F97EBE085B00C9989B64494E72E717127* L_42 = __this->___padHandGrab;
 		il2cpp_codegen_runtime_class_init_inline(Object_tC12DECB6760A7F2CBF65D9DCF18D044C2D97152C_il2cpp_TypeInfo_var);
 		bool L_43;
@@ -3157,7 +3199,7 @@ IL_0112:
 		}
 	}
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:77>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:86>
 		HandGrabInteractable_tAA4FA87F97EBE085B00C9989B64494E72E717127* L_44 = __this->___padHandGrab;
 		NullCheck(L_44);
 		Behaviour_set_enabled_mF1DCFE60EB09E0529FE9476CA804A3AA2D72B16A(L_44, (bool)0, NULL);
@@ -3165,7 +3207,7 @@ IL_0112:
 
 IL_012c:
 	{
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:79>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:88>
 		GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* L_45;
 		L_45 = Component_get_gameObject_m57AEFBB14DB39EC476F740BA000E170355DE691B(__this, NULL);
 		NullCheck(L_45);
@@ -3175,7 +3217,7 @@ IL_012c:
 		L_47 = String_Concat_m9E3155FB84015C823606188F53B47CB44C444991(L_46, _stringLiteral53F7A5F6CD6EA654568837EF7C429E71618534D6, NULL);
 		il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
 		Debug_Log_m87A9A3C761FF5C43ED8A53B16190A53D08F818BB(L_47, NULL);
-		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:80>
+		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:89>
 		return;
 	}
 }
@@ -3184,7 +3226,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void AEDPadAttach__ctor_m8FDEA9E0A6FF1E249084
 {
 	{
 		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:10>
-		__this->___attachDistance = (0.119999997f);
+		__this->___attachDistance = (0.25f);
 		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:11>
 		__this->___surfaceOffset = (0.00999999978f);
 		//<source_info:C:/UnityProjects/VR-Emergency-Project/Assets/AED/Scripts/AEDPadAttach.cs:20>
