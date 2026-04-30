@@ -6,9 +6,11 @@ public class AEDLidOpener : MonoBehaviour
 {
     [Header("Lid")]
     public Transform lidObject;
+    public Vector3 closedRotation = new Vector3(-180f, 0f, 0f);
     public float openAngle = 110f;
     public float speed = 120f;
     public Collider lidGrabCollider;
+    public Collider lidCollider;
 
     [Header("Pad Green")]
     public Rigidbody padGreenRb;
@@ -28,17 +30,20 @@ public class AEDLidOpener : MonoBehaviour
 
     private void Start()
     {
-        // 시작할 때 패드 완전히 잠금
+        currentAngle = 0f;
+        isOpening = false;
+        isOpened = false;
+
+        if (lidObject != null)
+            lidObject.localRotation = Quaternion.Euler(closedRotation);
+
+        if (lidCollider != null)
+            lidCollider.enabled = true;
+
+        if (lidGrabCollider != null)
+            lidGrabCollider.enabled = true;
+
         SetPadsInteractable(false);
-    }
-
-    public void OpenLid()
-    {
-        if (isOpening || isOpened)
-            return;
-
-        Debug.Log("OpenLid 호출됨");
-        isOpening = true;
     }
 
     private void Update()
@@ -55,33 +60,48 @@ public class AEDLidOpener : MonoBehaviour
                 currentAngle = openAngle;
 
             if (lidObject != null)
-                lidObject.localRotation = Quaternion.Euler(-currentAngle, 0f, 0f);
+            {
+                lidObject.localRotation = Quaternion.Euler(
+                    closedRotation.x - currentAngle,
+                    closedRotation.y,
+                    closedRotation.z
+                );
+            }
         }
         else
         {
             isOpened = true;
 
-            // 뚜껑 잡기 Collider 끄기 (패드 방해 방지)
             if (lidGrabCollider != null)
                 lidGrabCollider.enabled = false;
 
-            // 패드 활성화
+            if (lidCollider != null)
+                lidCollider.enabled = false;
+
             SetPadsInteractable(true);
 
             Debug.Log("뚜껑 열림 완료 → 패드 활성화");
         }
     }
 
+    public void OpenLid()
+    {
+        if (isOpened || isOpening)
+            return;
+
+        Debug.Log("OpenLid 호출됨: " + Time.time);
+
+        isOpening = true;
+    }
+
     private void SetPadsInteractable(bool active)
     {
-        // Rigidbody 제어 (핵심)
         if (padGreenRb != null)
             padGreenRb.isKinematic = !active;
 
         if (padRedRb != null)
             padRedRb.isKinematic = !active;
 
-        // Grab 제어
         if (padGreenGrabbable != null)
             padGreenGrabbable.enabled = active;
 
