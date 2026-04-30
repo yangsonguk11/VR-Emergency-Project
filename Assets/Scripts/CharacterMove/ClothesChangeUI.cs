@@ -60,6 +60,8 @@ public class ClothesChangeUI : MonoBehaviour
 
     public void YesChangeClothes()
     {
+        Debug.Log("Yes 버튼 눌림");
+
         suitBody.SetActive(false);
         noneBody.SetActive(true);
 
