@@ -16,7 +16,7 @@ TagManager:
   - UnGrabbable
   - NoCollisionGrabPoint
   - Door
-  - 
+  - NoCollisionOnBody
   - 
   - 
   - 
