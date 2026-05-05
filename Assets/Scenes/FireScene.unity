@@ -4697,9 +4697,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -4871,9 +4871,9 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minKillSpeed: 0
+    minKillSpeed: 10000
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.6
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -10012,9 +10012,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -10186,9 +10186,9 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minKillSpeed: 0
+    minKillSpeed: 10000
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.6
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -15149,9 +15149,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -15323,9 +15323,9 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minKillSpeed: 0
+    minKillSpeed: 10000
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.6
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -16679,7 +16679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4290283023539298, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.6694818
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 4290283023539298, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16716,6 +16716,22 @@ PrefabInstance:
     - target: {fileID: 4290283023539298, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198144061166377996, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
+      propertyPath: CollisionModule.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198144061166377996, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198144061166377996, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
+      propertyPath: CollisionModule.radiusScale
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 198144061166377996, guid: 8219ca08d5f44a740b709e1555164a14, type: 3}
+      propertyPath: CollisionModule.minKillSpeed
+      value: 10000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
