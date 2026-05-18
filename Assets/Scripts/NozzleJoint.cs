@@ -37,8 +37,8 @@ public class NozzleJoint : MonoBehaviour
                 rb = Undo.AddComponent<Rigidbody>(t.gameObject);
             // 고무호스: 적당한 무게감 + 저항으로 늘어지는 느낌
             rb.mass = 0.15f;
-            rb.drag = 3f;
-            rb.angularDrag = 4f;
+            rb.linearDamping = 3f;
+            rb.angularDamping = 4f;
 
             // 4. ConfigurableJoint 추가 및 부모 연결
             ConfigurableJoint joint = t.GetComponent<ConfigurableJoint>();
