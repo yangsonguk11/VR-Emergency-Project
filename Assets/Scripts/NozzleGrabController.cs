@@ -1,23 +1,25 @@
+using System.Collections.Generic;
 using Oculus.Interaction;
 using UnityEngine;
 
 public class NozzleGrabController : MonoBehaviour
 {
     [SerializeField] GrabInteractable _grabInteractable;
+    [SerializeField] private List<Rigidbody> _excludedRigidbodies = new List<Rigidbody>();
     private Rigidbody[] _rigidbodies;
     private bool _wasGrabbed;
 
     private void Awake()
     {
-        // 루트 Rigidbody를 제외한 자식 Rigidbody들만 저장
         Rigidbody rootRb = GetComponent<Rigidbody>();
+
         Rigidbody[] allRbs = GetComponentsInChildren<Rigidbody>();
 
         System.Collections.Generic.List<Rigidbody> childRbs =
             new System.Collections.Generic.List<Rigidbody>(allRbs.Length);
         foreach (var rb in allRbs)
         {
-            if (rb != rootRb)
+            if (rb != rootRb && !_excludedRigidbodies.Contains(rb))
                 childRbs.Add(rb);
         }
         _rigidbodies = childRbs.ToArray();
