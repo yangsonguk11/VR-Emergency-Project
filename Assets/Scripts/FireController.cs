@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class FireController : MonoBehaviour
 {
-    float fireIntensity;
+    public float fireIntensity;
     public float FireIntensity { get { return fireIntensity; } set { fireIntensity = value; UpdateFire(); } }
 
+    [SerializeField] float collisionDamage = 0.005f;
     [SerializeField] List<ParticleSystem> fireParticles;
     List<int> fireParticlesorginalemission;
     
@@ -49,6 +50,6 @@ public class FireController : MonoBehaviour
 
     public void ParticleCollide()
     {
-        FireIntensity -= 0.005f;
+        FireIntensity -= collisionDamage;
     }
 }
