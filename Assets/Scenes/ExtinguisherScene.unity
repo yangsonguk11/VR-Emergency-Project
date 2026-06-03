@@ -2189,6 +2189,10 @@ PrefabInstance:
       propertyPath: _ovrCameraRig
       value: 
       objectReference: {fileID: 1753444958}
+    - target: {fileID: 7218948594749983592, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: _layerMask.m_Bits
+      value: 343
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3657,7 +3661,8 @@ PrefabInstance:
       propertyPath: CollisionModule.minKillSpeed
       value: 50
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3965975654194906795, guid: d6ec55c27f24e0d4eb784216f08eeba4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4346979635813750, guid: d6ec55c27f24e0d4eb784216f08eeba4, type: 3}

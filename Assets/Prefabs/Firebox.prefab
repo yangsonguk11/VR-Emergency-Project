@@ -476,7 +476,7 @@ MonoBehaviour:
   _constraints:
     MinAngle:
       Constrain: 1
-      Value: -100
+      Value: -180
     MaxAngle:
       Constrain: 1
       Value: 0

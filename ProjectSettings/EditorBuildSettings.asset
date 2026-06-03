@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AED+Subway_Scene.unity
     guid: 580b39bc38479aa419436f81afda20bf
+  - enabled: 1
+    path: Assets/Scenes/HydrantScene.unity
+    guid: d512e8e78f5ae2441b476822a8fe524f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 573873d5420e0344ba9a97fd466a82f3, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
