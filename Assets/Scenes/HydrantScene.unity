@@ -5346,22 +5346,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 147719198435775942, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
-      propertyPath: ShapeModule.angle
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 147719198435775942, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 326071560426252329, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1517513029837692122, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 2235046379733377484, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.825
@@ -5405,14 +5389,6 @@ PrefabInstance:
     - target: {fileID: 4501603461937449829, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
       propertyPath: m_Name
       value: Firebox
-      objectReference: {fileID: 0}
-    - target: {fileID: 7962879474969577150, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 8380209186574479000, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
-      propertyPath: m_Layer
-      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

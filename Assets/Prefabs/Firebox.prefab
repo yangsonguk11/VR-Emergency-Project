@@ -721,7 +721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5951490769557007365, guid: 82ef827bb8bec8b4abdbfc05547b60cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0546
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5953949620821998317, guid: 82ef827bb8bec8b4abdbfc05547b60cd, type: 3}
       propertyPath: m_Layer
@@ -805,7 +805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7592505411264212987, guid: 82ef827bb8bec8b4abdbfc05547b60cd, type: 3}
       propertyPath: InitialModule.startSpeed.scalar
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7592505411264212987, guid: 82ef827bb8bec8b4abdbfc05547b60cd, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
