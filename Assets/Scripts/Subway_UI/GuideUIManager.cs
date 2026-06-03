@@ -285,19 +285,19 @@ public class GuideUIManager : MonoBehaviour
                 break;
 
             case GuideStep.SelectCarpenter:
-                guideText.text = "목수복을 입은 사람을 지목하여 119에 전화하게 하시오.";
+                guideText.text = "목수복을 입은 사람을 클릭하여 119에 전화하게 하시오.";
                 break;
 
             case GuideStep.RemovePatientClothes:
-                guideText.text = "환자의 옷을 벗기시오.";
+                guideText.text = "환자의 상체를 클릭하여 옷을 벗기시오.";
                 break;
 
             case GuideStep.SelectWomanForCPR:
-                guideText.text = "빨간색 옷을 입은 여자를 지목하여 CPR을 실시하게 하시오.";
+                guideText.text = "빨간색 옷을 입은 여자를 클릭하여 CPR을 실시하게 하시오.";
                 break;
 
             case GuideStep.OpenAED:
-                guideText.text = "AED를 열어 나오는 음성에 따라 진행하시오.";
+                guideText.text = "AED의 아래에 있는 버튼클 클릭하여 열어 나오는 음성에 따라 진행하시오.";
                 break;
 
             case GuideStep.Finished:
