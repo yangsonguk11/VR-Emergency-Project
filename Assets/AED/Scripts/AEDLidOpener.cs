@@ -22,9 +22,14 @@ public class AEDLidOpener : MonoBehaviour
     public GrabInteractable padRedGrab;
     public HandGrabInteractable padRedHandGrab;
 
+    [Header("AED Checker")]
+    public AEDChecker aedChecker;
+
     private bool isOpening = false;
     private bool isOpened = false;
     private float currentAngle = 0f;
+
+    public AEDVoiceGuideManager voiceGuideManager;
 
     private void Start()
     {
@@ -69,6 +74,11 @@ public class AEDLidOpener : MonoBehaviour
             SetPadsInteractable(true);
 
             Debug.Log("뚜껑 열림 완료 → 패드 활성화");
+
+            if (aedChecker != null)
+            {
+                aedChecker.NotifyLidOpened();
+            }
         }
     }
 
@@ -99,5 +109,10 @@ public class AEDLidOpener : MonoBehaviour
 
         if (padRedHandGrab != null)
             padRedHandGrab.enabled = active;
+    }
+
+    public bool IsOpened()
+    {
+        return isOpened;
     }
 }

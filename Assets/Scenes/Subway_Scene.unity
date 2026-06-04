@@ -73281,7 +73281,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &281991362447738311
 Transform:
   m_ObjectHideFlags: 0
@@ -144784,7 +144784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallDownCharacter
   fallDelay: 30
-  helper: {fileID: 9141147764607461244}
+  helpers: []
   fallSound: {fileID: 8300000, guid: d0fde06b8e2dbdd43af0702b616f83c0, type: 3}
 --- !u!114 &8861977508334405388
 MonoBehaviour:
@@ -147187,6 +147187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HelperAI
   target: {fileID: 3178482798390140284}
   stopDistance: 3
+  willCall: 0
 --- !u!4 &9142120194510161990
 Transform:
   m_ObjectHideFlags: 0

@@ -50,4 +50,14 @@ public class AEDLidPressButton : MonoBehaviour
             }
         }
     }
+
+    public void PressButton()
+    {
+        Debug.Log("PressButton ½ÇÇàµÊ");
+
+        if (lidOpener != null)
+        {
+            lidOpener.OpenLid();
+        }
+    }
 }

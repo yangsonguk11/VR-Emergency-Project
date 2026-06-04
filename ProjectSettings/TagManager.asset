@@ -17,6 +17,10 @@ TagManager:
   - UnGrabbable
   - NoCollisionGrabPoint
   - Door
+  - AEDButton
+  - AEDPad
+  - AEDBody
+  - shockButton
   - NoCollisionOnBody
   - 
   - 
