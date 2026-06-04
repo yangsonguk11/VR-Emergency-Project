@@ -3,7 +3,47 @@ guid: c50bc1091a13bc249b08a4eb3ed44b8d
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: 150c94bc3b84a1d4cbf1f0f6023fd158, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HallwayMat
+    second: {fileID: 2100000, guid: 4abb2f7abc0335f4e93d35dea553f4f9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MaskedMaterial
+    second: {fileID: 2100000, guid: 824cb7a1fd8b36145a4e34239d312da1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 02d5d354969eb1848b4338514bb85d52, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 243e901ab695bcf438a42cfd708910ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: 2e0291c8d6cc2ec4ab357fc04979764b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 5d96a865a3c9b7243a945ad71f235ad8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RoofMaterial
+    second: {fileID: 2100000, guid: 6535ffb13d5ffbb46a852186e411cb07, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

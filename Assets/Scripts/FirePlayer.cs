@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class FirePlayer : MonoBehaviour
 {
     [SerializeField] CanvasGroup gameovercanvasgroup;
+    [SerializeField] CanvasGroup gameclearcanvasgroup;
     public int SmokeGauge;
 
     void Start()
@@ -30,6 +31,12 @@ public class FirePlayer : MonoBehaviour
                 GameOver();
             }
         }
+        else if (other.gameObject.CompareTag("Clear"))
+            GameClear();
+    }
+    void GameClear()
+    {
+        StartCoroutine(GameClearCor());
     }
     void GameOver()
     {
@@ -45,5 +52,16 @@ public class FirePlayer : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         SceneManager.LoadScene("FireScene");
+    }
+    IEnumerator GameClearCor()
+    {
+        float t = 0;
+        while (t <= 6)
+        {
+            t += Time.fixedDeltaTime;
+            gameclearcanvasgroup.alpha = t / 2f;
+            yield return new WaitForFixedUpdate();
+        }
+        SceneManager.LoadScene("MainMenu");
     }
 }
