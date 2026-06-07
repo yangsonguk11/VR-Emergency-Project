@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 
@@ -86,3 +87,4 @@ public class NozzleJoint : MonoBehaviour
         Debug.Log("Joint 및 Rigidbody 일괄 적용 완료!");
     }
 }
+#endif
