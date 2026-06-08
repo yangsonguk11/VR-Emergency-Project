@@ -5390,9 +5390,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Firebox
       objectReference: {fileID: 0}
-    - target: {fileID: 8327125160973301619, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
+    - target: {fileID: 4501603461937449829, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8327125160973301619, guid: 52e88007e698acb4a8f185a6f6c42663, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
