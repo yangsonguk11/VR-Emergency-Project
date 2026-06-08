@@ -23,7 +23,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material.001
-    second: {fileID: 2100000, guid: 02d5d354969eb1848b4338514bb85d52, type: 2}
+    second: {fileID: 2100000, guid: 4c41ab33519ffa3459a4e842b4ecc074, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -44,6 +44,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: RoofMaterial
     second: {fileID: 2100000, guid: 6535ffb13d5ffbb46a852186e411cb07, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WindowFrameMaterial
+    second: {fileID: 2100000, guid: 751e3fe42fc93884d8e59d29cdaa2098, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
