@@ -37,7 +37,7 @@ public class GuideUIManager : MonoBehaviour
     [Header("환자 옷")]
     public GameObject suitBody;
     public GameObject noneBody;
-   
+
     private bool changed = false;
 
     [Header("CPR 이동 위치")]
@@ -47,114 +47,161 @@ public class GuideUIManager : MonoBehaviour
 
     public Collider womanCollider;
     public NavMeshAgent womanAgent;
-    //public MonoBehaviour womanAIScript; 
-    //public Collider patientCollider;
-    //public NavMeshAgent patientAgent;
 
-    [Header("엔딩")]
+    [Header("엔딩 / 구조대원")]
     public GameObject[] rescuers;
-    public Transform rescueTarget;
+
+    public Transform[] rescuerTargets;
+
     public float rescuerMoveSpeed = 2f;
+    public float rescuerArriveDistance = 0.2f;
     public string menuSceneName = "MenuScene";
 
     [Header("구조대원 애니메이션")]
     public Animator[] rescuerAnimators;
 
     private bool rescuersMoving = false;
-
+    private bool[] rescuerArrived;
 
     private GuideStep currentStep;
-
     private bool womanMovingToCPR = false;
 
     void Start()
     {
         currentStep = GuideStep.Introduction;
         ShowCurrentGuide();
+
         suitBody.SetActive(true);
         noneBody.SetActive(false);
+
+        rescuerArrived = new bool[rescuers.Length];
+
+        // 시작할 때 구조대원을 숨기고 싶으면 사용
+        for (int i = 0; i < rescuers.Length; i++)
+        {
+            if (rescuers[i] != null)
+            {
+                rescuers[i].SetActive(false);
+            }
+        }
     }
 
     void Update()
     {
-        // 빨간 옷 여자가 환자에게 이동하는 처리
-        if (womanMovingToCPR && woman != null && cprPosition != null)
-        {
+        MoveWomanToCPR();
 
-            // 여자 콜라이더를 아예 꺼도 됨
-            if (womanCollider != null)
-            {
-                womanCollider.enabled = false;
-            }
-
-            if (womanAgent != null)
-            {
-                if (womanAgent.enabled && womanAgent.isOnNavMesh)
-                {
-                    womanAgent.isStopped = true;
-                    womanAgent.ResetPath();
-                }
-
-                womanAgent.enabled = false;
-            }
-
-            woman.position = Vector3.MoveTowards(
-                woman.position,
-                cprPosition.position,
-                moveSpeed * Time.deltaTime
-            );
-
-            // 도착하면 CPR 애니메이션 실행
-            if (Vector3.Distance(woman.position, cprPosition.position) < 0.1f)
-            {
-                Debug.Log("여자 CPR 위치 도착");
-
-                womanMovingToCPR = false;
-
-                if (womanAnimator != null)
-                {
-                    Debug.Log("CPR Trigger 실행");
-                    womanAnimator.SetTrigger("CPR");
-                }
-                else
-                {
-                    Debug.LogError("womanAnimator가 연결 안 됨");
-                }
-
-                currentStep = GuideStep.OpenAED;
-                ShowCurrentGuide();
-            }
-        }
-
-        // 구조대원들이 환자 쪽으로 이동하는 처리
         if (rescuersMoving)
         {
-            MoveRescuersToPatient();
+            MoveRescuersToTargets();
         }
     }
 
-    private void MoveRescuersToPatient()
+    private void MoveWomanToCPR()
+    {
+        if (!womanMovingToCPR || woman == null || cprPosition == null)
+            return;
+
+        if (womanCollider != null)
+        {
+            womanCollider.enabled = false;
+        }
+
+        if (womanAgent != null)
+        {
+            if (womanAgent.enabled && womanAgent.isOnNavMesh)
+            {
+                womanAgent.isStopped = true;
+                womanAgent.ResetPath();
+            }
+
+            womanAgent.enabled = false;
+        }
+
+        woman.position = Vector3.MoveTowards(
+            woman.position,
+            cprPosition.position,
+            moveSpeed * Time.deltaTime
+        );
+
+        Vector3 direction = cprPosition.position - woman.position;
+        direction.y = 0f;
+
+        if (direction != Vector3.zero)
+        {
+            woman.rotation = Quaternion.Slerp(
+                woman.rotation,
+                Quaternion.LookRotation(direction),
+                Time.deltaTime * 5f
+            );
+        }
+
+        if (Vector3.Distance(woman.position, cprPosition.position) < 0.1f)
+        {
+            Debug.Log("여자 CPR 위치 도착");
+
+            womanMovingToCPR = false;
+
+            if (womanAnimator != null)
+            {
+                Debug.Log("CPR Trigger 실행");
+                womanAnimator.SetTrigger("CPR");
+            }
+
+            currentStep = GuideStep.OpenAED;
+            ShowCurrentGuide();
+        }
+    }
+
+    private void MoveRescuersToTargets()
     {
         bool allArrived = true;
 
         for (int i = 0; i < rescuers.Length; i++)
         {
-            GameObject rescuer = rescuers[i];
+            if (i >= rescuerTargets.Length)
+                continue;
 
-            if (rescuer == null)
+            GameObject rescuer = rescuers[i];
+            Transform target = rescuerTargets[i];
+
+            if (rescuer == null || target == null)
+                continue;
+
+            // 이미 도착한 구조대원은 더 이상 이동하지 않음
+            if (rescuerArrived[i])
+                continue;
+
+            float distance = Vector3.Distance(rescuer.transform.position, target.position);
+
+            if (distance <= rescuerArriveDistance)
             {
+                rescuerArrived[i] = true;
+
+                if (i < rescuerAnimators.Length && rescuerAnimators[i] != null)
+                {
+                    rescuerAnimators[i].SetBool("IsMoving", false);
+                }
+
+                // 도착 후 서로 밀리지 않게 콜라이더 비활성화
+                Collider col = rescuer.GetComponent<Collider>();
+                if (col != null)
+                {
+                    col.enabled = false;
+                }
+
+                Debug.Log("구조대원 " + i + " 도착");
                 continue;
             }
 
-            // 구조대원 이동
+            allArrived = false;
+
             rescuer.transform.position = Vector3.MoveTowards(
                 rescuer.transform.position,
-                rescueTarget.position,
+                target.position,
                 rescuerMoveSpeed * Time.deltaTime
             );
 
-            // 구조대원이 이동 방향을 바라보게 함
-            Vector3 direction = rescueTarget.position - rescuer.transform.position;
+            Vector3 direction = target.position - rescuer.transform.position;
             direction.y = 0f;
 
             if (direction != Vector3.zero)
@@ -165,30 +212,20 @@ public class GuideUIManager : MonoBehaviour
                     Time.deltaTime * 5f
                 );
             }
+        }
 
-            // 아직 도착 안 한 구조대원이 있으면 false
-            if (Vector3.Distance(rescuer.transform.position, rescueTarget.position) > 0.2f)
+        for (int i = 0; i < rescuerArrived.Length; i++)
+        {
+            if (!rescuerArrived[i])
             {
                 allArrived = false;
+                break;
             }
         }
 
-        // 모든 구조대원이 도착했을 때
         if (allArrived)
         {
             rescuersMoving = false;
-
-            // 걷기 애니메이션 끄기 → Idle 전환
-            foreach (Animator anim in rescuerAnimators)
-            {
-                if (anim != null)
-                {
-                    anim.SetBool("IsMoving", false);
-                    Debug.Log("구조대원 Idle 전환");
-                }
-            }
-
-            // 5초 뒤 메뉴 씬 이동
             StartCoroutine(EndingRoutine());
         }
     }
@@ -242,17 +279,8 @@ public class GuideUIManager : MonoBehaviour
                 if (targetType == TargetType.AED)
                 {
                     guideText.text = "AED를 열고 음성 안내에 따라 진행하시오.";
-
                     currentStep = GuideStep.Finished;
                 }
-                break;
-
-            case GuideStep.RescueArrive:
-                guideText.text = "구조대원이 도착했습니다.";
-                break;
-
-            case GuideStep.Ending:
-                guideText.text = "응급 처치가 완료되었습니다. 구조대원에게 환자를 인계합니다.";
                 break;
         }
     }
@@ -261,7 +289,6 @@ public class GuideUIManager : MonoBehaviour
     {
         suitBody.SetActive(false);
         noneBody.SetActive(true);
-
         changed = true;
     }
 
@@ -281,7 +308,6 @@ public class GuideUIManager : MonoBehaviour
 
     public void NotifyArrivedNearPatient()
     {
-        // 플레이어가 환자 근처에 도착했을 때 호출
         if (currentStep == GuideStep.GoToPatientWithAED)
         {
             currentStep = GuideStep.SelectCarpenter;
@@ -298,12 +324,14 @@ public class GuideUIManager : MonoBehaviour
 
         for (int i = 0; i < rescuers.Length; i++)
         {
+            rescuerArrived[i] = false;
+
             if (rescuers[i] != null)
             {
                 rescuers[i].SetActive(true);
             }
 
-            if (rescuerAnimators[i] != null)
+            if (i < rescuerAnimators.Length && rescuerAnimators[i] != null)
             {
                 rescuerAnimators[i].SetBool("IsMoving", true);
             }
@@ -312,14 +340,12 @@ public class GuideUIManager : MonoBehaviour
         rescuersMoving = true;
     }
 
-
-
     private void ShowCurrentGuide()
     {
         switch (currentStep)
         {
             case GuideStep.Introduction:
-                guideText.text = "사람이 쓰러졌을떄 대처 방법을 체험하는 프로그램입니다.";
+                guideText.text = "사람이 쓰러졌을 때 대처 방법을 체험하는 프로그램입니다.";
                 break;
 
             case GuideStep.GoToPatientWithAED:
@@ -339,7 +365,15 @@ public class GuideUIManager : MonoBehaviour
                 break;
 
             case GuideStep.OpenAED:
-                guideText.text = "AED의 아래에 있는 버튼클 클릭하여 열어 나오는 음성에 따라 진행하시오.";
+                guideText.text = "AED의 아래에 있는 버튼을 클릭하여 열고, 음성 안내에 따라 진행하시오.";
+                break;
+
+            case GuideStep.RescueArrive:
+                guideText.text = "구조대원이 환자에게 이동 중입니다.";
+                break;
+
+            case GuideStep.Ending:
+                guideText.text = "응급 처치가 완료되었습니다. 구조대원에게 환자를 인계합니다.";
                 break;
 
             case GuideStep.Finished:
