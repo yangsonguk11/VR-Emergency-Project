@@ -47,15 +47,18 @@ public class GuideUIManager : MonoBehaviour
 
     public Collider womanCollider;
     public NavMeshAgent womanAgent;
-    public MonoBehaviour womanAIScript; 
-    public Collider patientCollider;
-    public NavMeshAgent patientAgent;
+    //public MonoBehaviour womanAIScript; 
+    //public Collider patientCollider;
+    //public NavMeshAgent patientAgent;
 
     [Header("엔딩")]
     public GameObject[] rescuers;
     public Transform rescueTarget;
     public float rescuerMoveSpeed = 2f;
     public string menuSceneName = "MenuScene";
+
+    [Header("구조대원 애니메이션")]
+    public Animator[] rescuerAnimators;
 
     private bool rescuersMoving = false;
 
@@ -86,8 +89,12 @@ public class GuideUIManager : MonoBehaviour
 
             if (womanAgent != null)
             {
-                womanAgent.isStopped = true;
-                womanAgent.ResetPath();
+                if (womanAgent.enabled && womanAgent.isOnNavMesh)
+                {
+                    womanAgent.isStopped = true;
+                    womanAgent.ResetPath();
+                }
+
                 womanAgent.enabled = false;
             }
 
@@ -130,28 +137,58 @@ public class GuideUIManager : MonoBehaviour
     {
         bool allArrived = true;
 
-        foreach (GameObject rescuer in rescuers)
+        for (int i = 0; i < rescuers.Length; i++)
         {
+            GameObject rescuer = rescuers[i];
+
             if (rescuer == null)
             {
                 continue;
             }
 
+            // 구조대원 이동
             rescuer.transform.position = Vector3.MoveTowards(
                 rescuer.transform.position,
                 rescueTarget.position,
                 rescuerMoveSpeed * Time.deltaTime
             );
 
+            // 구조대원이 이동 방향을 바라보게 함
+            Vector3 direction = rescueTarget.position - rescuer.transform.position;
+            direction.y = 0f;
+
+            if (direction != Vector3.zero)
+            {
+                rescuer.transform.rotation = Quaternion.Slerp(
+                    rescuer.transform.rotation,
+                    Quaternion.LookRotation(direction),
+                    Time.deltaTime * 5f
+                );
+            }
+
+            // 아직 도착 안 한 구조대원이 있으면 false
             if (Vector3.Distance(rescuer.transform.position, rescueTarget.position) > 0.2f)
             {
                 allArrived = false;
             }
         }
 
+        // 모든 구조대원이 도착했을 때
         if (allArrived)
         {
             rescuersMoving = false;
+
+            // 걷기 애니메이션 끄기 → Idle 전환
+            foreach (Animator anim in rescuerAnimators)
+            {
+                if (anim != null)
+                {
+                    anim.SetBool("IsMoving", false);
+                    Debug.Log("구조대원 Idle 전환");
+                }
+            }
+
+            // 5초 뒤 메뉴 씬 이동
             StartCoroutine(EndingRoutine());
         }
     }
@@ -255,15 +292,20 @@ public class GuideUIManager : MonoBehaviour
     public void OnAEDCompleted()
     {
         Debug.Log("AED 완료됨. 구조대원 단계 시작");
+
         currentStep = GuideStep.RescueArrive;
         ShowCurrentGuide();
 
-        // 구조대원 활성화
-        foreach (GameObject rescuer in rescuers)
+        for (int i = 0; i < rescuers.Length; i++)
         {
-            if (rescuer != null)
+            if (rescuers[i] != null)
             {
-                rescuer.SetActive(true);
+                rescuers[i].SetActive(true);
+            }
+
+            if (rescuerAnimators[i] != null)
+            {
+                rescuerAnimators[i].SetBool("IsMoving", true);
             }
         }
 

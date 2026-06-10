@@ -8,68 +8,45 @@ public class OrangeShockButton : MonoBehaviour
     [Header("Effects")]
     public AudioSource shockAudioSource;
     public AudioClip shockClip;
-
     public ParticleSystem shockEffect;
 
     private bool isPressed = false;
 
-    public void PressShockButton()
+    // VRRayClicker에서 Ray가 버튼을 맞췄을 때 호출됨
+    public void Interact()
     {
-        Debug.Log("PressShockButton 함수 진입");
+        PressShockButton();
+    }
 
+    private void PressShockButton()
+    {
         if (isPressed)
         {
-            Debug.Log("이미 버튼 눌림 상태");
+            Debug.Log("이미 Shock 버튼이 눌린 상태");
             return;
         }
 
         isPressed = true;
 
-        Debug.Log("제세동 버튼 클릭 성공");
+        Debug.Log("주황색 Shock 버튼 Ray 클릭 성공");
 
-        // AED 진행 상태 알림
         if (aedChecker != null)
         {
-            Debug.Log("AEDChecker 연결 확인됨");
-
             aedChecker.NotifyShockButtonPressed();
         }
         else
         {
-            Debug.Log("AEDChecker 연결 안됨");
+            Debug.LogError("AEDChecker 연결 안됨");
         }
 
-        // 효과음
-        if (shockAudioSource != null)
+        if (shockAudioSource != null && shockClip != null)
         {
-            Debug.Log("Shock AudioSource 있음");
-
-            if (shockClip != null)
-            {
-                Debug.Log("Shock Clip 재생");
-
-                shockAudioSource.PlayOneShot(shockClip);
-            }
-            else
-            {
-                Debug.Log("Shock Clip 없음");
-            }
-        }
-        else
-        {
-            Debug.Log("Shock AudioSource 없음");
+            shockAudioSource.PlayOneShot(shockClip);
         }
 
-        // 파티클
         if (shockEffect != null)
         {
-            Debug.Log("Shock Effect 실행");
-
             shockEffect.Play();
-        }
-        else
-        {
-            Debug.Log("Shock Effect 없음");
         }
     }
 }

@@ -77,9 +77,7 @@ public class AEDPadAttach : MonoBehaviour
         {
             Debug.Log(gameObject.name + " 부착 거리 도달");
 
-            Vector3 surfacePoint = bodyCollider.ClosestPoint(attachTarget.position);
-
-            AttachToBody(surfacePoint);
+            AttachToBody();
         }
     }
 
@@ -89,7 +87,7 @@ public class AEDPadAttach : MonoBehaviour
         Debug.Log(gameObject.name + " 에디터 드래그 Grab 처리됨");
     }
 
-    private void AttachToBody(Vector3 surfacePoint)
+    private void AttachToBody()
     {
         Debug.Log(gameObject.name + " AttachToBody 실행");
 
@@ -102,13 +100,13 @@ public class AEDPadAttach : MonoBehaviour
             padRigidbody.isKinematic = true;
         }
 
+        // 환자 몸 표면 위치에 약간 띄워서 부착
         transform.position = attachTarget.position;
 
-        transform.rotation =
-            attachTarget.rotation *
-            Quaternion.Euler(rotationOffset);
+        // attachTarget의 회전에 보정값을 더해서 부착
+        transform.rotation = attachTarget.rotation * Quaternion.Euler(rotationOffset);
 
-        transform.SetParent(bodyCollider.transform);
+        transform.SetParent(bodyCollider.transform, true);
 
         if (padGrabbable != null)
             padGrabbable.enabled = false;

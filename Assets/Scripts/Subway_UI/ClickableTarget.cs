@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class ClickableTarget : MonoBehaviour
 {
@@ -7,24 +6,18 @@ public class ClickableTarget : MonoBehaviour
 
     private GuideUIManager guideUIManager;
 
-    void Start()
+    private void Start()
     {
         guideUIManager = FindObjectOfType<GuideUIManager>();
     }
 
-    // 에디터 마우스 테스트용
+    // PC 테스트용
     private void OnMouseDown()
     {
         Interact();
     }
 
-    // VR Select Entered 이벤트용
-    public void InteractFromXR(SelectEnterEventArgs args)
-    {
-        Interact();
-    }
-
-    private void Interact()
+    public void Interact()
     {
         if (guideUIManager != null)
         {

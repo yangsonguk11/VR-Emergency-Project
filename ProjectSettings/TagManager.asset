@@ -6,7 +6,7 @@ TagManager:
   tags:
   - LeftController
   - Smoke
-  - Clear
+  - PlayerHand
   layers:
   - Default
   - TransparentFX
@@ -21,11 +21,8 @@ TagManager:
   - AEDPad
   - AEDBody
   - shockButton
-  - NoCollisionOnBody
-  - 
-  - 
-  - 
-  - 
+  - Interactable
+
   - 
   - 
   - 
