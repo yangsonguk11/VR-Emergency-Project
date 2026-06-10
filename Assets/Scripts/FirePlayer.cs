@@ -21,6 +21,7 @@ public class FirePlayer : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        Debug.Log(other.gameObject);
         if (other.gameObject.CompareTag("Smoke"))
         {
             SmokeGauge += 1;
