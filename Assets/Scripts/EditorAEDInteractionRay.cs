@@ -10,13 +10,11 @@ public class EditorAEDInteractionRay : MonoBehaviour
     public LayerMask buttonLayer;
     public LayerMask padLayer;
     public LayerMask bodyLayer;
-    public LayerMask shockButtonLayer;
 
     public AEDLidOpener aedLidOpener;
 
     private Transform draggingObject;
     private Vector3 offset;
-
 
     void Start()
     {
@@ -28,18 +26,18 @@ public class EditorAEDInteractionRay : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (TryClickShockButton())
-                return;
-
+            // AED 뚜껑 열기 버튼 클릭
             if (TryClickButton())
                 return;
 
+            // 뚜껑이 열린 후에만 패드 드래그 가능
             if (aedLidOpener != null && aedLidOpener.IsOpened())
             {
                 if (TryStartDrag(padLayer))
                     return;
             }
 
+            // 환자 몸 드래그
             TryStartDrag(bodyLayer);
         }
 
@@ -52,8 +50,6 @@ public class EditorAEDInteractionRay : MonoBehaviour
         {
             draggingObject = null;
         }
-
-
     }
 
     bool TryClickButton()
@@ -84,22 +80,20 @@ public class EditorAEDInteractionRay : MonoBehaviour
 
             if (padAttach != null)
             {
-                // 이미 부착된 패드면 드래그 금지
+                // 이미 부착된 패드는 드래그 금지
                 if (padAttach.IsAttached())
                 {
                     Debug.Log("이미 부착된 패드라서 드래그 불가");
                     return false;
                 }
 
-                // 패드 루트 드래그
                 draggingObject = padAttach.transform;
 
-                // 에디터 드래그도 Grab 처리
+                // 에디터에서도 Grab 처리
                 padAttach.MarkGrabbedForEditor();
             }
             else
             {
-                // 일반 오브젝트 드래그
                 draggingObject = hit.collider.transform;
             }
 
@@ -130,39 +124,4 @@ public class EditorAEDInteractionRay : MonoBehaviour
 
         return playerCamera.ScreenToWorldPoint(mousePos);
     }
-
-    bool TryClickShockButton()
-    {
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-
-        Debug.Log("주황색 버튼 Ray 발사");
-
-        if (Physics.Raycast(ray, out RaycastHit hit, clickDistance, shockButtonLayer, QueryTriggerInteraction.Collide))
-        {
-            Debug.Log("주황색 버튼 Collider 맞음: " + hit.collider.name);
-
-            OrangeShockButton shockButton =
-                hit.collider.GetComponentInParent<OrangeShockButton>();
-
-            if (shockButton != null)
-            {
-                Debug.Log("OrangeShockButton 컴포넌트 찾음");
-
-                shockButton.PressShockButton();
-
-                return true;
-            }
-            else
-            {
-                Debug.Log("OrangeShockButton 컴포넌트 없음");
-            }
-        }
-        else
-        {
-            Debug.Log("주황색 버튼 Raycast 실패");
-        }
-
-        return false;
-    }
-
 }

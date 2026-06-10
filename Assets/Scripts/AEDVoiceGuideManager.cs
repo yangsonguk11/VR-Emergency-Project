@@ -14,6 +14,11 @@ public class AEDVoiceGuideManager : MonoBehaviour
     public AudioClip pressOrangeClip;     // 5. 주황색 버튼을 클릭하세요
     public AudioClip shockDoneClip;       // 6. 제세동 실시되었습니다
 
+    [Header("CPR Character")]
+    public Animator cprAnimator;
+    public string idleTriggerName = "Idle";
+    public string cprTriggerName = "CPR";
+
     private bool isStarted = false;
 
     // AED 뚜껑이 열렸을 때 호출
@@ -47,6 +52,8 @@ public class AEDVoiceGuideManager : MonoBehaviour
         PlayVoice(needShockClip);
         yield return new WaitForSeconds(needShockClip.length + 2f);
 
+        SetCPRIdle();
+
         PlayVoice(stayAwayClip);
         yield return new WaitForSeconds(stayAwayClip.length + 2f);
 
@@ -66,5 +73,19 @@ public class AEDVoiceGuideManager : MonoBehaviour
         audioSource.Stop();
         audioSource.clip = clip;
         audioSource.Play();
+    }
+
+    private void SetCPRIdle()
+    {
+        if (cprAnimator == null)
+        {
+            Debug.LogWarning("CPR Animator가 연결되지 않았습니다.");
+            return;
+        }
+
+        cprAnimator.ResetTrigger(cprTriggerName);
+        cprAnimator.SetTrigger(idleTriggerName);
+
+        Debug.Log("접촉금지 음성 출력 → CPR 캐릭터 Idle 전환");
     }
 }
