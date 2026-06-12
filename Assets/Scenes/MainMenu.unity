@@ -1302,7 +1302,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC9C0\uD558\uCCA0 \uC751\uAE09\uC0C1\uD669"
+  m_text: "AED (\uC790\uB3D9\uC2EC\uC7A5\uCDA9\uACA9\uAE30) \uC0AC\uC6A9\uBC95"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 40e4ad9adbbc1834bbbc652b99b2f09c, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
