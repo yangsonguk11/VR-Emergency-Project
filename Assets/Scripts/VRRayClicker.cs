@@ -15,12 +15,26 @@ public class VRRayClicker : MonoBehaviour
     public float rayDistance = 10f;
     public LayerMask interactLayer;
 
-    [Header("Debug")]
-    public bool showDebugRay = true;
+    [Header("Ray Visual")]
+    public LineRenderer lineRenderer;
+    public float lineVisibleTime = 0.1f;
+
+    private float lineTimer = 0f;
 
     private void Update()
     {
-        // 현재 스크립트가 붙은 손의 입력만 체크
+        // Ray 궤적 표시 시간 감소
+        if (lineRenderer != null && lineRenderer.enabled)
+        {
+            lineTimer -= Time.deltaTime;
+
+            if (lineTimer <= 0f)
+            {
+                lineRenderer.enabled = false;
+            }
+        }
+
+        // 현재 손의 트리거 입력만 받음
         if (IsThisHandTriggerDown())
         {
             FireRayFromController();
@@ -29,7 +43,6 @@ public class VRRayClicker : MonoBehaviour
 
     private bool IsThisHandTriggerDown()
     {
-        // 왼손이면 왼쪽 컨트롤러 트리거만 확인
         if (handType == HandType.Left)
         {
             return OVRInput.GetDown(
@@ -38,7 +51,6 @@ public class VRRayClicker : MonoBehaviour
             );
         }
 
-        // 오른손이면 오른쪽 컨트롤러 트리거만 확인
         return OVRInput.GetDown(
             OVRInput.Button.PrimaryIndexTrigger,
             OVRInput.Controller.RTouch
@@ -47,15 +59,37 @@ public class VRRayClicker : MonoBehaviour
 
     private void FireRayFromController()
     {
-        // 이 스크립트가 붙어있는 손 위치와 방향에서 Ray 발사
         Ray ray = new Ray(transform.position, transform.forward);
 
-        if (showDebugRay)
+        RaycastHit hit;
+
+        Vector3 endPoint = ray.origin + ray.direction * rayDistance;
+
+        // Ray가 무언가에 맞으면 맞은 위치까지만 선 표시
+        if (Physics.Raycast(ray, out hit, rayDistance, interactLayer))
         {
-            Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red, 1f);
+            endPoint = hit.point;
         }
 
+        ShowRayLine(ray.origin, endPoint);
+
         CheckRayHit(ray);
+    }
+
+    private void ShowRayLine(Vector3 startPoint, Vector3 endPoint)
+    {
+        if (lineRenderer == null)
+        {
+            Debug.LogWarning($"{handType} LineRenderer가 연결되지 않음");
+            return;
+        }
+
+        lineRenderer.enabled = true;
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, startPoint);
+        lineRenderer.SetPosition(1, endPoint);
+
+        lineTimer = lineVisibleTime;
     }
 
     private void CheckRayHit(Ray ray)
@@ -68,12 +102,12 @@ public class VRRayClicker : MonoBehaviour
             return;
         }
 
-        // 가장 가까운 오브젝트부터 검사
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
         foreach (RaycastHit hit in hits)
         {
-            ClickableTarget clickableTarget = hit.collider.GetComponentInParent<ClickableTarget>();
+            ClickableTarget clickableTarget =
+                hit.collider.GetComponentInParent<ClickableTarget>();
 
             if (clickableTarget != null)
             {
@@ -82,21 +116,13 @@ public class VRRayClicker : MonoBehaviour
                 return;
             }
 
-            OrangeShockButton shockButton = hit.collider.GetComponentInParent<OrangeShockButton>();
+            OrangeShockButton shockButton =
+                hit.collider.GetComponentInParent<OrangeShockButton>();
 
             if (shockButton != null)
             {
                 Debug.Log($"{handType} ShockButton 감지: {hit.collider.name}");
                 shockButton.Interact();
-                return;
-            }
-
-            ScenarioCloseButton closeButton = hit.collider.GetComponentInParent<ScenarioCloseButton>();
-
-            if (closeButton != null)
-            {
-                Debug.Log("Scenario UI X 버튼 감지: " + hit.collider.name);
-                closeButton.Interact();
                 return;
             }
         }

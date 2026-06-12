@@ -7,6 +7,7 @@ using System.Collections;
 public enum GuideStep
 {
     Introduction,
+    ControlGuide,      // 추가
     GoToPatientWithAED,
     SelectCarpenter,
     RemovePatientClothes,
@@ -346,6 +347,14 @@ public class GuideUIManager : MonoBehaviour
         {
             case GuideStep.Introduction:
                 guideText.text = "사람이 쓰러졌을 때 대처 방법을 체험하는 프로그램입니다.";
+                break;
+
+            case GuideStep.ControlGuide:
+                guideText.text =
+                    "조작 방법 안내\n\n" +
+                    "왼손 스틱으로 이동할 수 있습니다.\n" +
+                    "컨트롤러 트리거를 눌러 Ray를 발사하여 물체를 선택할 수 있습니다.\n" +
+                    "B 버튼을 눌러 현재 안내를 다시 확인할 수 있습니다.";
                 break;
 
             case GuideStep.GoToPatientWithAED:

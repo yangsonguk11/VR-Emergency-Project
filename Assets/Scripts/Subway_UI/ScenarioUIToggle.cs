@@ -8,25 +8,22 @@ public class ScenarioUIToggle : MonoBehaviour
     private void Start()
     {
         if (scenarioUI == null)
+        {
             scenarioUI = gameObject;
+        }
     }
 
     private void Update()
     {
+        // B 버튼
         if (OVRInput.GetDown(OVRInput.Button.Two))
         {
-            ShowUI();
+            ToggleUI();
         }
     }
 
-    // UI의 X 버튼 OnClick에 연결할 함수
-    public void HideUI()
+    public void ToggleUI()
     {
-        scenarioUI.SetActive(false);
-    }
-
-    public void ShowUI()
-    {
-        scenarioUI.SetActive(true);
+        scenarioUI.SetActive(!scenarioUI.activeSelf);
     }
 }

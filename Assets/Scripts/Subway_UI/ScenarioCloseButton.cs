@@ -1,16 +1,16 @@
-using UnityEngine;
+//using UnityEngine;
 
-public class ScenarioCloseButton : MonoBehaviour
-{
-    public ScenarioUIToggle scenarioUIToggle;
+//public class ScenarioCloseButton : MonoBehaviour
+//{
+//    public ScenarioUIToggle scenarioUIToggle;
 
-    public void Interact()
-    {
-        Debug.Log("UI X ¹öÆ° Ray Å¬¸¯µÊ");
+//    public void Interact()
+//    {
+//        Debug.Log("UI X ¹öÆ° Ray Å¬¸¯µÊ");
 
-        if (scenarioUIToggle != null)
-        {
-            scenarioUIToggle.HideUI();
-        }
-    }
-}
+//        if (scenarioUIToggle != null)
+//        {
+//            scenarioUIToggle.HideUI();
+//        }
+//    }
+//}
