@@ -31,7 +31,10 @@ public class FirePlayer : MonoBehaviour
             }
         }
         else if (other.gameObject.CompareTag("Clear"))
+        {
+            GetComponent<Collider>().enabled = false;
             GameClear();
+        }
     }
     void GameClear()
     {
